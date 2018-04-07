@@ -6,8 +6,7 @@
 
 #include "shape.hpp"
 
-class Path : public Shape
-{
+class Path : public Shape {
 public:
   Path(const QList<QPoint> &);
   ~Path() = default;
@@ -15,9 +14,7 @@ public:
   void draw(QPainter *) override;
   void redraw(QPainter *) override;
 
-  const QList<QPoint>& allPoints() const {
-    return points;
-  }
+  const QList<QPoint> &allPoints() const { return points; }
 
 private:
   QList<QPoint> points;

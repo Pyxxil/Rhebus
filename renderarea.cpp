@@ -13,7 +13,7 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
   transformed = false;
 
   setAutoFillBackground(true);
-  image = QImage(320, 320, QImage::Format_RGB32);
+  image = QImage(400, 400, QImage::Format_RGB32);
   image.fill(qRgb(255, 255, 255));
 }
 
@@ -32,15 +32,11 @@ void RenderArea::setPenColour(const QColor &colour) {
   update();
 }
 
-void RenderArea::setBrushColor(const QColor &colour)
-{
+void RenderArea::setBrushColor(const QColor &colour) {
   this->brush.setColor(colour);
 }
 
-void RenderArea::setPenWidth(int width)
-{
-  this->pen.setWidth(width);
-}
+void RenderArea::setPenWidth(int width) { this->pen.setWidth(width); }
 
 void RenderArea::setBrush(const QBrush &brush) {
   this->brush = brush;
@@ -57,9 +53,8 @@ void RenderArea::setTransformed(bool transformed) {
   update();
 }
 
-void RenderArea::changeSize()
-{
-  image = QImage(width(), height(), QImage::Format_RGB32);
+void RenderArea::changeSize() {
+  image = QImage(400, 400, QImage::Format_RGB32);
   image.fill(qRgb(255, 255, 255));
 }
 
@@ -110,8 +105,9 @@ void RenderArea::draw(const QPoint &endPoint) {
   int arcLength = 120 * 16;
 
   QPainter painter(&(this->image));
-  //painter.setPen(
-  //    QPen(Qt::black, qrand() % 10, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+  // painter.setPen(
+  //    QPen(Qt::black, qrand() % 10, Qt::SolidLine, Qt::RoundCap,
+  //    Qt::RoundJoin));
   painter.setPen(pen);
   painter.setBrush(brush);
   if (antialiased) {
@@ -192,9 +188,9 @@ void RenderArea::draw(const QPoint &endPoint) {
 void RenderArea::clearImage() {
   image.fill(qRgb(255, 255, 255));
   // modified = true;
-  if (!shapes.empty()) {
+  if (!mShapes.empty()) {
     QPainter painter(&(this->image));
-    for (auto &&shape : shapes) {
+    for (auto &&shape : mShapes) {
       shape->redraw(&painter);
     }
   }
@@ -202,12 +198,11 @@ void RenderArea::clearImage() {
 }
 
 void RenderArea::push() {
-  shapes.push_back(std::move(currentShape));
+  mShapes.push_back(std::move(currentShape));
   currentShape = nullptr;
 }
 
-void RenderArea::setFromString(QString string)
-{
+void RenderArea::setFromString(QString string) {
   if (string == "Line") {
     setShape(Shapes::Line);
   } else if (string == "Freeform") {

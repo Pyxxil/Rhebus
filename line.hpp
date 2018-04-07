@@ -3,8 +3,7 @@
 
 #include "shape.hpp"
 
-class Line : public Shape
-{
+class Line : public Shape {
 public:
   explicit Line(const QPoint &p, const QPoint &l);
   ~Line() = default;

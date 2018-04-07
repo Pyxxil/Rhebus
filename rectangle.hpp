@@ -7,8 +7,7 @@
 
 class QPainter;
 
-class Rectangle : public Shape
-{
+class Rectangle : public Shape {
 public:
   explicit Rectangle(const QRect &);
   ~Rectangle() = default;

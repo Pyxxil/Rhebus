@@ -1,11 +1,12 @@
 #include "definitionmodel.hpp"
 #include "definitionitem.hpp"
+#include "rootdefinition.hpp"
 #include "rootitem.hpp"
 
 #include <QDebug>
 
 DefinitionModel::DefinitionModel(QObject *parent) : QAbstractItemModel(parent) {
-  rootItem = new DefinitionItem(QVector<QVariant>() << QString(""), nullptr);
+  rootItem = new RootItem(QVector<QVariant>() << QString(""), nullptr);
   setupModelData(rootItem);
 }
 
@@ -15,8 +16,8 @@ QModelIndex DefinitionModel::index(int row, int column,
     return QModelIndex();
   }
 
-  DefinitionItem *parentItem = getItem(parent);
-  DefinitionItem *childItem = parentItem->child(row);
+  RootItem *parentItem = getItem(parent);
+  RootItem *childItem = parentItem->child(row);
 
   if (childItem) {
     return createIndex(row, column, childItem);
@@ -30,8 +31,8 @@ QModelIndex DefinitionModel::parent(const QModelIndex &index) const {
     return QModelIndex();
   }
 
-  DefinitionItem *childItem = getItem(index);
-  DefinitionItem *parentItem = childItem->parent();
+  RootItem *childItem = getItem(index);
+  RootItem *parentItem = childItem->parent();
 
   if (parentItem == rootItem) {
     return QModelIndex();
@@ -49,7 +50,7 @@ QVariant DefinitionModel::data(const QModelIndex &index, int role) const {
     return QVariant();
   }
 
-  DefinitionItem *item = getItem(index);
+  RootItem *item = getItem(index);
 
   return item->data(index.column());
 }
@@ -64,7 +65,7 @@ QVariant DefinitionModel::headerData(int section, Qt::Orientation orientation,
 }
 
 int DefinitionModel::rowCount(const QModelIndex &parent) const {
-  DefinitionItem *parentItem = getItem(parent);
+  RootItem *parentItem = getItem(parent);
   return parentItem->childCount();
 }
 
@@ -86,7 +87,7 @@ bool DefinitionModel::setData(const QModelIndex &index, const QVariant &value,
     return false;
   }
 
-  DefinitionItem *item = getItem(index);
+  RootItem *item = getItem(index);
 
   bool result = item->setData(index.column(), value);
 
@@ -136,7 +137,7 @@ bool DefinitionModel::removeColumns(int position, int columns,
 
 bool DefinitionModel::insertRows(int position, int rows,
                                  const QModelIndex &parent) {
-  DefinitionItem *parentItem = getItem(parent);
+  RootItem *parentItem = getItem(parent);
 
   bool success;
 
@@ -149,7 +150,7 @@ bool DefinitionModel::insertRows(int position, int rows,
 
 bool DefinitionModel::removeRows(int position, int rows,
                                  const QModelIndex &parent) {
-  DefinitionItem *parentItem = getItem(parent);
+  RootItem *parentItem = getItem(parent);
 
   bool success = true;
 
@@ -160,10 +161,9 @@ bool DefinitionModel::removeRows(int position, int rows,
   return success;
 }
 
-DefinitionItem *DefinitionModel::getItem(const QModelIndex &index) const {
+RootItem *DefinitionModel::getItem(const QModelIndex &index) const {
   if (index.isValid()) {
-    DefinitionItem *item =
-        static_cast<DefinitionItem *>(index.internalPointer());
+    RootItem *item = static_cast<RootItem *>(index.internalPointer());
 
     if (item) {
       return item;
@@ -173,16 +173,15 @@ DefinitionItem *DefinitionModel::getItem(const QModelIndex &index) const {
   return rootItem;
 }
 
-void DefinitionModel::insertDefinition(const DefinitionItem &def) {
+void DefinitionModel::insertDefinition(
+    const QString &name, const QList<QSharedPointer<Shape>> shapes) {
   beginInsertRows(QModelIndex(), 0, 1);
-  definitions->insertChildren(definitions->childCount(), 1,
-                              rootItem->columnCount());
-  definitions->child(definitions->childCount() - 1)->setData(0, def.data(0));
+  definitions->addDefinition(name);
+  definitions->definition(definitions->childCount() - 1)
+      ->addDescription(shapes);
   endInsertRows();
 }
 
-void DefinitionModel::setupModelData(DefinitionItem *parent) {
-  parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-  parent->child(parent->childCount() - 1)->setData(0, "Definitions");
-  definitions = parent->child(parent->childCount() - 1);
+void DefinitionModel::setupModelData(RootItem *parent) {
+  parent->setUp(&definitions, &layers);
 }

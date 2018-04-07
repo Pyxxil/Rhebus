@@ -5,30 +5,33 @@
 #include <QVariant>
 #include <QVector>
 
-class DefinitionItem
-{
+#include "rootdefinition.hpp"
+#include "rootitem.hpp"
+
+class Shape;
+class DescriptionItem;
+
+class DefinitionItem : public RootItem {
 public:
-  explicit DefinitionItem(const QVector<QVariant> &data, DefinitionItem *parent);
-  ~DefinitionItem();
+  explicit DefinitionItem(RootDefinition *parent, const QString &tName);
+  ~DefinitionItem() { qDeleteAll(descriptions); }
 
-  DefinitionItem *child(int number);
-  DefinitionItem *parent();
-  int childCount() const;
-  int columnCount() const;
-  int childNumber() const;
+  RootDefinition *parent() { return mParent; }
+  const QString &name() const { return mName; }
 
+  void addDescription(const QList<QSharedPointer<Shape>> &);
+
+  DescriptionItem *description(int number);
   QVariant data(int column) const;
-
-  bool insertChildren(int position, int count, int columns);
-  bool insertColumns(int position, int columns);
-  bool removeChildren(int position, int count);
-  bool removeColumns(int position, int columns);
-  bool setData(int column, const QVariant &value);
+  int childCount() const;
+  int childNumber();
+  int columnCount() const;
 
 private:
-  QList<DefinitionItem *> childItems;
-  QVector<QVariant> itemData;
-  DefinitionItem *parentItem;
+  RootDefinition *mParent;
+  QString mName;
+
+  QList<DescriptionItem *> descriptions;
 };
 
 #endif // DEFINITIONITEM_HPP

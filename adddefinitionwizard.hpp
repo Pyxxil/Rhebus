@@ -4,11 +4,12 @@
 #include <QWizard>
 
 namespace Ui {
-  class AddDefinitionWizard;
+class AddDefinitionWizard;
 }
 
-class AddDefinitionWizard : public QWizard
-{
+#include "shape.hpp"
+
+class AddDefinitionWizard : public QWizard {
   Q_OBJECT
 
 public:
@@ -16,6 +17,7 @@ public:
   ~AddDefinitionWizard();
 
   const QString definitionName() const;
+  const QList<QSharedPointer<Shape>> shapes() const;
 
 public slots:
   void openPenColourChooser();

@@ -1,13 +1,12 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 
-#include <QPen>
 #include <QBrush>
+#include <QPen>
 
 class QPainter;
 
-class Shape
-{
+class Shape {
 public:
   Shape();
   virtual ~Shape() {}

@@ -3,16 +3,16 @@
 
 #include <QList>
 
-class DefinitionItem;
+class RootDefinition;
+class RootLayer;
 
-class RootItem
-{
+class RootItem {
 public:
-  explicit RootItem(const QVector<QVariant> &data, RootItem *parent);
+  explicit RootItem(const QVector<QVariant> &data, RootItem *parent)
+      : itemData(data), childItems(), mParent(parent) {}
   ~RootItem();
 
-  DefinitionItem *child(int number);
-  RootItem *parent();
+  RootItem *child(int row);
   int childCount() const;
   int columnCount() const;
   int childNumber() const;
@@ -25,10 +25,18 @@ public:
   bool removeColumns(int position, int columns);
   bool setData(int column, const QVariant &value);
 
+  RootItem *parent() const;
+
+  QList<RootItem *> &children() { return childItems; }
+
+  void setUp(RootDefinition **definitions, RootLayer **layers);
+
+  virtual bool isDescription() const { return false; }
+
 private:
-  QList<DefinitionItem *> childItems;
   QVector<QVariant> itemData;
-  RootItem *parentItem;
+  QList<RootItem *> childItems;
+  RootItem *mParent;
 };
 
 #endif // ROOTITEM_HPP

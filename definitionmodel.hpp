@@ -4,17 +4,18 @@
 #include <QAbstractItemModel>
 
 class RootItem;
-
+class Shape;
+class RootDefinition;
+class RootLayer;
 class DefinitionItem;
 
-class DefinitionModel : public QAbstractItemModel
-{
+class DefinitionModel : public QAbstractItemModel {
   Q_OBJECT
 public:
   DefinitionModel(QObject *parent = nullptr);
 
   QModelIndex index(int row, int column,
-                            const QModelIndex &parent = QModelIndex()) const;
+                    const QModelIndex &parent = QModelIndex()) const;
   QModelIndex parent(const QModelIndex &child) const;
 
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -26,21 +27,24 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const;
 
   bool setData(const QModelIndex &index, const QVariant &value, int role);
-  bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
+  bool setHeaderData(int section, Qt::Orientation orientation,
+                     const QVariant &value, int role);
   bool insertColumns(int column, int count, const QModelIndex &parent);
   bool removeColumns(int column, int count, const QModelIndex &parent);
   bool insertRows(int row, int count, const QModelIndex &parent);
   bool removeRows(int row, int count, const QModelIndex &parent);
 
-  DefinitionItem *getItem(const QModelIndex &index) const;
+  RootItem *getItem(const QModelIndex &index) const;
 
-  void insertDefinition(const DefinitionItem&);
+  void insertDefinition(const QString &name,
+                        const QList<QSharedPointer<Shape>> shapes);
 
 private:
-  void setupModelData(DefinitionItem *parent);
+  void setupModelData(RootItem *parent);
 
-  DefinitionItem *rootItem;
-  DefinitionItem *definitions;
+  RootItem *rootItem;
+  RootDefinition *definitions;
+  RootLayer *layers;
 };
 
 #endif // DEFINITIONMODEL_HPP

@@ -3,9 +3,10 @@
 
 #include "ui_mainwindow.h"
 
+#include "adddefinitionwizard.hpp"
 #include "definitionitem.hpp"
 #include "definitionmodel.hpp"
-#include "adddefinitionwizard.hpp"
+#include "descriptionitem.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -16,14 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
   setContextMenuPolicy(Qt::CustomContextMenu);
   connect(ui->definitionView, SIGNAL(customContextMenuRequested(QPoint)),
           SLOT(customMenuRequested(QPoint)));
+  connect(ui->definitionView, SIGNAL(render(DescriptionItem *)),
+          ui->definitionRenderer, SLOT(renderDescription(DescriptionItem *)));
+  ui->definitionRenderer->changeSize();
 
   definitionModel = static_cast<DefinitionModel *>(ui->definitionView->model());
 
-  //static_cast<DefinitionModel *>(ui->definitionView->model())
+  // static_cast<DefinitionModel *>(ui->definitionView->model())
   //    ->insertDefinition(DefinitionItem(
-//          QVector<QVariant>() << "Hello",
-//          static_cast<DefinitionModel *>(ui->definitionView->model())
-//              ->getItem(QModelIndex())));
+  //          QVector<QVariant>() << "Hello",
+  //          static_cast<DefinitionModel *>(ui->definitionView->model())
+  //              ->getItem(QModelIndex())));
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -48,15 +52,14 @@ void MainWindow::customMenuRequested(QPoint point) {
 
 void MainWindow::addDefinition(bool) {
   AddDefinitionWizard wizard;
-  connect(&wizard, SIGNAL(accepted()), this, SLOT(addDefinitionWizardAccepted()));
+  connect(&wizard, SIGNAL(accepted()), this,
+          SLOT(addDefinitionWizardAccepted()));
   wizard.exec();
 }
 
 void MainWindow::editDefinition(bool) {}
 
-void MainWindow::addDefinitionWizardAccepted()
-{
+void MainWindow::addDefinitionWizardAccepted() {
   AddDefinitionWizard *wizard = static_cast<AddDefinitionWizard *>(sender());
-  definitionModel->insertDefinition(DefinitionItem(QVector<QVariant>() << wizard->definitionName(),
-                                                   definitionModel->getItem((QModelIndex()))));
+  definitionModel->insertDefinition(wizard->definitionName(), wizard->shapes());
 }

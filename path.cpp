@@ -9,7 +9,7 @@ void Path::draw(QPainter *painter) {
   brush = painter->brush();
 
   for (int i = 0; i < points.length() - 1; ++i) {
-      painter->drawLine(points[i], points[i + 1]);
+    painter->drawLine(points[i], points[i + 1]);
   }
 }
 

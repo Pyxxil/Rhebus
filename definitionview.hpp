@@ -3,10 +3,17 @@
 
 #include <QTreeView>
 
-class DefinitionView : public QTreeView
-{
+class DescriptionItem;
+
+class DefinitionView : public QTreeView {
+  Q_OBJECT
 public:
-  DefinitionView(QWidget *parent = nullptr);
+  explicit DefinitionView(QWidget *parent = nullptr);
+
+  void mousePressEvent(QMouseEvent *event) override;
+
+signals:
+  void render(DescriptionItem *);
 };
 
 #endif // DEFINITIONVIEW_HPP

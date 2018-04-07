@@ -4,27 +4,19 @@
 
 #include <QDebug>
 
-RootItem::RootItem(const QVector<QVariant> &data,
-                               RootItem *parent)
-    : itemData(data), parentItem(parent) {}
-
 RootItem::~RootItem() { qDeleteAll(childItems); }
 
-DefinitionItem *RootItem::child(int number) {
-  return childItems.value(number);
-}
+RootItem *RootItem::child(int number) { return childItems.value(number); }
 
-RootItem *RootItem::parent() { return parentItem; }
+RootItem *RootItem::parent() const { return mParent; }
 
-QVariant RootItem::data(int column) const {
-  return itemData.value(column);
-}
+QVariant RootItem::data(int column) const { return itemData.value(column); }
 
 int RootItem::childCount() const { return childItems.count(); }
 
 int RootItem::childNumber() const {
-  if (parentItem) {
-    //return parentItem->childItems.indexOf(const_cast<RootItem *>(this));
+  if (mParent) {
+    return mParent->childItems.indexOf(const_cast<RootItem *>(this));
   }
 
   return 0;
@@ -39,8 +31,8 @@ bool RootItem::insertChildren(int position, int count, int columns) {
 
   for (int row = 0; row < count; ++row) {
     QVector<QVariant> data(columns);
-    //DefinitionItem *item = new DefinitionItem(data, this);
-    //childItems.insert(position, item);
+    // DefinitionItem *item = new DefinitionItem(data, this);
+    // childItems.insert(position, item);
   }
 
   return true;
@@ -55,7 +47,7 @@ bool RootItem::insertColumns(int position, int columns) {
     itemData.insert(position, QVariant());
   }
 
-  foreach (DefinitionItem *child, childItems) {
+  foreach (RootItem *child, childItems) {
     child->insertColumns(position, columns);
   }
 
@@ -68,7 +60,7 @@ bool RootItem::removeChildren(int position, int count) {
   }
 
   for (int row = 0; row < count; ++row) {
-    delete childItems.takeAt(position);
+    // delete childItems.takeAt(position);
   }
 
   return true;
@@ -83,7 +75,7 @@ bool RootItem::removeColumns(int position, int columns) {
     itemData.removeAt(position);
   }
 
-  foreach (DefinitionItem *child, childItems) {
+  foreach (RootItem *child, childItems) {
     child->removeColumns(position, columns);
   }
 
@@ -97,4 +89,9 @@ bool RootItem::setData(int column, const QVariant &value) {
 
   itemData[column] = value;
   return true;
+}
+
+void RootItem::setUp(RootDefinition **definitions, RootLayer **layers) {
+  *definitions = new RootDefinition(this);
+  children().append(*definitions);
 }

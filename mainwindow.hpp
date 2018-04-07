@@ -4,13 +4,13 @@
 #include <QMainWindow>
 
 namespace Ui {
-  class MainWindow;
+class MainWindow;
 }
 
 class DefinitionModel;
+class DescriptionItem;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
