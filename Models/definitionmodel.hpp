@@ -39,11 +39,13 @@ public:
   void insertDefinition(const QString &name,
                         const QList<QSharedPointer<Shape>> shapes);
 
+  RootDefinitionItem *definitions() const { return mDefinitions; }
+
 private:
   void setupModelData(RootItem *parent);
 
   RootItem *rootItem;
-  RootDefinitionItem *definitions;
+  RootDefinitionItem *mDefinitions;
   RootLayerItem *layers;
 };
 

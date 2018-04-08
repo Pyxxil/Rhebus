@@ -33,3 +33,7 @@ void Triangle::redraw(QPainter *painter) {
   // Then restore it when returning.
   painter->restore();
 }
+
+void Triangle::move(const QPoint &, QPainter *) {}
+
+bool Triangle::contains(const QPoint &) const { return false; }

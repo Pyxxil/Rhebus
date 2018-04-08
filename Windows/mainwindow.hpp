@@ -21,6 +21,7 @@ public slots:
   void customMenuRequested(QPoint);
   void addDefinition(bool);
   void editDefinition(bool);
+  void copyDescription(bool);
   void addDefinitionWizardAccepted();
 
 private:

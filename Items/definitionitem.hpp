@@ -27,6 +27,8 @@ public:
   int childNumber();
   int columnCount() const;
 
+  bool isDefinition() const final { return true; }
+
 private:
   RootDefinitionItem *mParent;
   QString mName;

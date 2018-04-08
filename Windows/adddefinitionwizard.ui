@@ -177,7 +177,7 @@
   <customwidget>
    <class>RenderArea</class>
    <extends>QWidget</extends>
-   <header>renderarea.hpp</header>
+   <header>Views/renderarea.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

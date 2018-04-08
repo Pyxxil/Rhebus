@@ -1,4 +1,6 @@
+#include <QDebug>
 #include <QPainter>
+#include <QtMath>
 
 #include "path.hpp"
 
@@ -21,4 +23,23 @@ void Path::redraw(QPainter *painter) {
   draw(painter);
 
   painter->restore();
+}
+
+void Path::move(const QPoint &, QPainter *) {}
+
+inline qreal distance(const QPoint &a, const QPoint &b) {
+  const qreal dx = (a.x() - b.x());
+  const qreal dy = (a.y() - b.y());
+  return qSqrt(dx * dx + dy * dy);
+}
+
+bool Path::contains(const QPoint &point) const {
+  for (int i = 0; i < points.length() - 1; ++i) {
+    if ((distance(points[i], point) + distance(points[i + 1], point) -
+         distance(points[i], points[i + 1])) <= (pen.widthF())) {
+      return true;
+    }
+  }
+
+  return false;
 }

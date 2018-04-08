@@ -1,8 +1,8 @@
 #ifndef DESCRIPTIONITEM_HPP
 #define DESCRIPTIONITEM_HPP
 
-#include "rootitem.hpp"
 #include "Shapes/shape.hpp"
+#include "rootitem.hpp"
 
 class QPainter;
 class DefinitionItem;

@@ -20,3 +20,7 @@ void Line::redraw(QPainter *painter) {
 
   painter->restore();
 }
+
+void Line::move(const QPoint &, QPainter *) {}
+
+bool Line::contains(const QPoint &) const { return false; }

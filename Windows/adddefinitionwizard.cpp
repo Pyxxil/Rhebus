@@ -3,6 +3,8 @@
 #include "adddefinitionwizard.hpp"
 #include "ui_adddefinitionwizard.h"
 
+#include "Items/descriptionitem.hpp"
+
 AddDefinitionWizard::AddDefinitionWizard(QWidget *parent)
     : QWizard(parent), ui(new Ui::AddDefinitionWizard) {
   ui->setupUi(this);
@@ -42,6 +44,14 @@ const QString AddDefinitionWizard::definitionName() const {
 
 const QList<QSharedPointer<Shape>> AddDefinitionWizard::shapes() const {
   return ui->renderer->shapes();
+}
+
+void AddDefinitionWizard::setDefinitionName(const QString &name) {
+  ui->definitionName->setText(name);
+}
+
+void AddDefinitionWizard::setDescription(const DescriptionItem *item) {
+  ui->renderer->setShapes(item->shapes());
 }
 
 void AddDefinitionWizard::openPenColourChooser() {

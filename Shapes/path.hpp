@@ -11,8 +11,17 @@ public:
   Path(const QList<QPoint> &);
   ~Path() = default;
 
+  Path(const Path &rhs) = default;
+  Path(Path &&rhs) noexcept = default;
+
+  Path &operator=(const Path &rhs) = default;
+  Path &operator=(Path &&rhs) noexcept = default;
+
   void draw(QPainter *) override;
   void redraw(QPainter *) override;
+  void move(const QPoint &, QPainter *) final;
+
+  bool contains(const QPoint &) const;
 
   const QList<QPoint> &allPoints() const { return points; }
 

@@ -32,6 +32,9 @@ public:
   void setUp(RootDefinitionItem **definitions, RootLayerItem **layers);
 
   virtual bool isDescription() const { return false; }
+  virtual bool isDefinition() const { return false; }
+  virtual bool isLayer() const { return false; }
+  virtual bool isObject() const { return false; }
 
 private:
   QVector<QVariant> itemData;

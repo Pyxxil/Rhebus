@@ -177,12 +177,12 @@ RootItem *DefinitionModel::getItem(const QModelIndex &index) const {
 void DefinitionModel::insertDefinition(
     const QString &name, const QList<QSharedPointer<Shape>> shapes) {
   beginInsertRows(QModelIndex(), 0, 1);
-  definitions->addDefinition(name);
-  definitions->definition(definitions->childCount() - 1)
+  mDefinitions->addDefinition(name);
+  mDefinitions->definition(mDefinitions->childCount() - 1)
       ->addDescription(shapes);
   endInsertRows();
 }
 
 void DefinitionModel::setupModelData(RootItem *parent) {
-  parent->setUp(&definitions, &layers);
+  parent->setUp(&mDefinitions, &layers);
 }

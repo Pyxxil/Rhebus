@@ -9,6 +9,8 @@ class AddDefinitionWizard;
 
 #include "Shapes/shape.hpp"
 
+class DescriptionItem;
+
 class AddDefinitionWizard : public QWizard {
   Q_OBJECT
 
@@ -18,6 +20,9 @@ public:
 
   const QString definitionName() const;
   const QList<QSharedPointer<Shape>> shapes() const;
+
+  void setDefinitionName(const QString &);
+  void setDescription(const DescriptionItem *);
 
 public slots:
   void openPenColourChooser();

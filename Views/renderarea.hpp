@@ -38,6 +38,8 @@ public:
 
   const QList<QSharedPointer<Shape>> shapes() const { return mShapes; }
 
+  void setShapes(QList<QSharedPointer<Shape>> shapes);
+
 protected:
   void mousePressEvent(QMouseEvent *event) override;
 
@@ -72,6 +74,7 @@ private:
   bool antialiased;
   bool transformed;
   bool scribbling{false};
+  bool selecting{false};
   QPixmap pixmap;
   QImage image;
 
