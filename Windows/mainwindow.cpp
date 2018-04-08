@@ -4,9 +4,9 @@
 #include "ui_mainwindow.h"
 
 #include "adddefinitionwizard.hpp"
-#include "definitionitem.hpp"
-#include "definitionmodel.hpp"
-#include "descriptionitem.hpp"
+#include "Items/definitionitem.hpp"
+#include "Models/definitionmodel.hpp"
+#include "Items/descriptionitem.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {

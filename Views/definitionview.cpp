@@ -3,7 +3,7 @@
 #include <QMouseEvent>
 
 #include "definitionview.hpp"
-#include "rootitem.hpp"
+#include "Items/rootitem.hpp"
 
 DefinitionView::DefinitionView(QWidget *parent) : QTreeView(parent) {
   setContextMenuPolicy(Qt::CustomContextMenu);

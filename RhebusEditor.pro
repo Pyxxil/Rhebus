@@ -26,40 +26,44 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-        renderarea.cpp \
-    definitionmodel.cpp \
-    definitionitem.cpp \
-    definitionview.cpp \
-    shape.cpp \
-    triangle.cpp \
-    rectangle.cpp \
-    line.cpp \
-    path.cpp \
-    adddefinitionwizard.cpp \
-    descriptionitem.cpp \
-    rootitem.cpp \
-    rootdefinition.cpp \
-    descriptionrenderer.cpp
+    main.cpp \
+    Windows/mainwindow.cpp \
+    Windows/adddefinitionwizard.cpp \
+    Views/renderarea.cpp \
+    Views/descriptionrenderer.cpp \
+    Views/definitionview.cpp \
+    Models/definitionmodel.cpp \
+    Shapes/shape.cpp \
+    Shapes/triangle.cpp \
+    Shapes/rectangle.cpp \
+    Shapes/line.cpp \
+    Shapes/path.cpp \
+    Items/layeritem.cpp \
+    Items/rootitem.cpp \
+    Items/descriptionitem.cpp \
+    Items/definitionitem.cpp \
+    Items/rootdefinitionitem.cpp \
+    Items/rootlayeritem.cpp
 
 HEADERS += \
-        mainwindow.hpp \
-        renderarea.hpp \
-    definitionmodel.hpp \
-    definitionitem.hpp \
-    definitionview.hpp \
-    shape.hpp \
-    triangle.hpp \
-    rectangle.hpp \
-    line.hpp \
-    path.hpp \
-    adddefinitionwizard.hpp \
-    descriptionitem.hpp \
-    rootitem.hpp \
-    rootdefinition.hpp \
-    descriptionrenderer.hpp
+    Windows/mainwindow.hpp \
+    Windows/adddefinitionwizard.hpp \
+    Views/renderarea.hpp \
+    Views/definitionview.hpp \
+    Views/descriptionrenderer.hpp \
+    Models/definitionmodel.hpp \
+    Shapes/shape.hpp \
+    Shapes/triangle.hpp \
+    Shapes/rectangle.hpp \
+    Shapes/line.hpp \
+    Shapes/path.hpp \
+    Items/definitionitem.hpp \
+    Items/descriptionitem.hpp \
+    Items/rootitem.hpp \
+    Items/layeritem.hpp \
+    Items/rootdefinitionitem.hpp \
+    Items/rootlayeritem.hpp
 
 FORMS += \
-        mainwindow.ui \
-    adddefinitionwizard.ui
+    Windows/mainwindow.ui \
+    Windows/adddefinitionwizard.ui

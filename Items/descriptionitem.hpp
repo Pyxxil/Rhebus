@@ -2,7 +2,7 @@
 #define DESCRIPTIONITEM_HPP
 
 #include "rootitem.hpp"
-#include "shape.hpp"
+#include "Shapes/shape.hpp"
 
 class QPainter;
 class DefinitionItem;

@@ -1,6 +1,7 @@
 #include "rootitem.hpp"
 
-#include "definitionitem.hpp"
+#include "rootdefinitionitem.hpp"
+#include "rootlayeritem.hpp"
 
 #include <QDebug>
 
@@ -91,7 +92,9 @@ bool RootItem::setData(int column, const QVariant &value) {
   return true;
 }
 
-void RootItem::setUp(RootDefinition **definitions, RootLayer **layers) {
-  *definitions = new RootDefinition(this);
+void RootItem::setUp(RootDefinitionItem **definitions, RootLayerItem **layers) {
+  *definitions = new RootDefinitionItem(this);
   children().append(*definitions);
+  *layers = new RootLayerItem(this);
+  children().append(*layers);
 }

@@ -5,8 +5,8 @@
 
 class RootItem;
 class Shape;
-class RootDefinition;
-class RootLayer;
+class RootDefinitionItem;
+class RootLayerItem;
 class DefinitionItem;
 
 class DefinitionModel : public QAbstractItemModel {
@@ -43,8 +43,8 @@ private:
   void setupModelData(RootItem *parent);
 
   RootItem *rootItem;
-  RootDefinition *definitions;
-  RootLayer *layers;
+  RootDefinitionItem *definitions;
+  RootLayerItem *layers;
 };
 
 #endif // DEFINITIONMODEL_HPP

@@ -1,10 +1,10 @@
 #include <QtGui>
 
-#include "line.hpp"
-#include "path.hpp"
-#include "rectangle.hpp"
-#include "shape.hpp"
-#include "triangle.hpp"
+#include "Shapes/line.hpp"
+#include "Shapes/path.hpp"
+#include "Shapes/rectangle.hpp"
+#include "Shapes/shape.hpp"
+#include "Shapes/triangle.hpp"
 
 #include "renderarea.hpp"
 

@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "shape.hpp"
+#include "Shapes/shape.hpp"
 
 namespace Shapes {
 enum Shape {

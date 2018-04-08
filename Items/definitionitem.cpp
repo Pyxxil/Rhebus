@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-DefinitionItem::DefinitionItem(RootDefinition *parent, const QString &tName)
+DefinitionItem::DefinitionItem(RootDefinitionItem *parent, const QString &tName)
     : RootItem(QVector<QVariant>() << tName, parent), mName(tName) {}
 
 void DefinitionItem::addDescription(

@@ -5,10 +5,10 @@
 
 class DefinitionItem;
 
-class RootDefinition : public RootItem {
+class RootDefinitionItem : public RootItem {
 public:
-  explicit RootDefinition(RootItem *parent);
-  ~RootDefinition() = default;
+  explicit RootDefinitionItem(RootItem *parent);
+  ~RootDefinitionItem() = default;
 
   void addDefinition(const QString &name);
   DefinitionItem *definition(int row) const;

@@ -7,7 +7,7 @@ namespace Ui {
 class AddDefinitionWizard;
 }
 
-#include "shape.hpp"
+#include "Shapes/shape.hpp"
 
 class AddDefinitionWizard : public QWizard {
   Q_OBJECT

@@ -3,8 +3,8 @@
 
 #include <QList>
 
-class RootDefinition;
-class RootLayer;
+class RootDefinitionItem;
+class RootLayerItem;
 
 class RootItem {
 public:
@@ -29,7 +29,7 @@ public:
 
   QList<RootItem *> &children() { return childItems; }
 
-  void setUp(RootDefinition **definitions, RootLayer **layers);
+  void setUp(RootDefinitionItem **definitions, RootLayerItem **layers);
 
   virtual bool isDescription() const { return false; }
 

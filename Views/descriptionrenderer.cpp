@@ -2,7 +2,7 @@
 
 #include <QtGui>
 
-#include "descriptionitem.hpp"
+#include "Items/descriptionitem.hpp"
 
 DescriptionRenderer::DescriptionRenderer(QWidget *parent) : QWidget(parent) {
   setAutoFillBackground(true);
