@@ -29,7 +29,7 @@ void RenderArea::setShape(Shapes::Shape shape) {
 
 void RenderArea::setPen(const QPen &pen) {
   this->pen = pen;
-  if (selecting) {
+  if (selected) {
     QPainter painter(&(this->image));
     currentShape->setPen(this->pen);
     currentShape->redraw(&painter);
@@ -39,7 +39,7 @@ void RenderArea::setPen(const QPen &pen) {
 
 void RenderArea::setPenColour(const QColor &colour) {
   this->pen.setColor(colour);
-  if (selecting) {
+  if (selected) {
     QPainter painter(&(this->image));
     currentShape->setPen(this->pen);
     currentShape->redraw(&painter);
@@ -49,7 +49,7 @@ void RenderArea::setPenColour(const QColor &colour) {
 
 void RenderArea::setBrushColor(const QColor &colour) {
   this->brush.setColor(colour);
-  if (selecting) {
+  if (selected) {
     QPainter painter(&(this->image));
     currentShape->setBrush(this->brush);
     currentShape->redraw(&painter);
@@ -59,7 +59,7 @@ void RenderArea::setBrushColor(const QColor &colour) {
 
 void RenderArea::setPenWidth(int width) {
   this->pen.setWidth(width);
-  if (selecting) {
+  if (selected) {
     QPainter painter(&(this->image));
     currentShape->setPen(this->pen);
     currentShape->redraw(&painter);
@@ -69,7 +69,7 @@ void RenderArea::setPenWidth(int width) {
 
 void RenderArea::setBrush(const QBrush &brush) {
   this->brush = brush;
-  if (selecting) {
+  if (selected) {
     QPainter painter(&(this->image));
     currentShape->setBrush(this->brush);
     currentShape->redraw(&painter);
@@ -93,45 +93,43 @@ void RenderArea::changeSize() {
 }
 
 void RenderArea::mousePressEvent(QMouseEvent *event) {
-  if (selecting) {
-    currentShape = nullptr;
-    selecting = false;
-  }
+  scribbling = selected = moving = false;
+
   if (event->button() == Qt::LeftButton) {
     startPoint = event->pos();
+  } else if (event->button() == Qt::RightButton) {
+    for (int i = mShapes.length(); i > 0; --i) {
+      auto shape = mShapes[i - 1];
+      if (shape->contains(event->pos())) {
+        selected = true;
+        currentShape = shape;
+        currentShape->setMovingStart(event->pos());
+        mShapes.removeAt(i - 1);
+        break;
+      }
+    }
   }
 }
 
 void RenderArea::mouseMoveEvent(QMouseEvent *event) {
-  if ((event->buttons() == Qt::LeftButton)) {
-    draw(event->pos());
+  if (event->buttons() & Qt::LeftButton) {
     scribbling = true;
-    selecting = false;
+    draw(event->pos());
+  } else if (selected && event->buttons() & Qt::RightButton) {
+    moving = true;
+    draw(event->pos());
   }
 }
 
 void RenderArea::mouseReleaseEvent(QMouseEvent *event) {
   if (event->button() == Qt::LeftButton) {
-    qDebug() << "Event at" << event->pos();
-    qDebug() << "Scribbling =" << scribbling;
-    if (!scribbling && event->pos() == startPoint) {
-      for (int i = 0; i < mShapes.length(); ++i) {
-        auto shape = mShapes[i];
-        if (shape->contains(startPoint)) {
-          selecting = true;
-          currentShape = shape;
-          currentShape->setMovingStart(event->pos());
-          qDebug() << "A Shape contains the point" << startPoint;
-          break;
-        }
-      }
-    } else {
-      draw(event->pos());
-      // Should push it to the stack here
-      push();
-      scribbling = false;
-      qDebug() << "Pushed";
-    }
+    draw(event->pos());
+    push();
+    scribbling = false;
+  } else if (event->button() == Qt::RightButton) {
+    draw(event->pos());
+    push();
+    moving = false;
   }
 }
 
@@ -141,11 +139,13 @@ void RenderArea::paintEvent(QPaintEvent *event) {
   painter.drawImage(dirtyRect, this->image, dirtyRect);
 }
 
-template <typename T> inline static T min(T x, T y) { return x < y ? x : y; }
+namespace {
+template <typename T> inline T min(T x, T y) { return x < y ? x : y; }
 
-template <typename T> inline static T max(T x, T y) { return x < y ? x : y; }
+template <typename T> inline T max(T x, T y) { return x < y ? x : y; }
 
-template <typename T> inline static T max(T x) { return x < 0 ? -x : x; }
+template <typename T> inline T max(T x) { return x < 0 ? -x : x; }
+} // namespace
 
 void RenderArea::draw(const QPoint &endPoint) {
   clearImage();
@@ -153,6 +153,7 @@ void RenderArea::draw(const QPoint &endPoint) {
   QPainter painter(&(this->image));
   painter.setPen(pen);
   painter.setBrush(brush);
+
   if (antialiased) {
     painter.setRenderHint(QPainter::Antialiasing, true);
   }
@@ -165,7 +166,6 @@ void RenderArea::draw(const QPoint &endPoint) {
   }
 
   if (scribbling) {
-
     QRect rect(startPoint, endPoint);
 
     switch (shape) {
@@ -230,7 +230,8 @@ void RenderArea::draw(const QPoint &endPoint) {
     painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
 
     update(rect);
-  } else if (selecting) {
+  } else if (moving) {
+    qDebug() << "Moving current shape to" << endPoint;
     currentShape->move(endPoint, &painter);
   }
 }

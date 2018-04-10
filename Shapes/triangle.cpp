@@ -1,21 +1,20 @@
 #include <QDebug>
 #include <QPainter>
+#include <QPolygon>
 
 #include "triangle.hpp"
 
-Triangle::Triangle(const QRect &tRect) : Shape(), rect(tRect) {}
+Triangle::Triangle(const QRect &tRect)
+    : Shape(),
+      polygon(QVector<QPoint>()
+              << QPoint(tRect.left() + (tRect.width() / 2), tRect.top())
+              << tRect.bottomLeft() << tRect.bottomRight()) {}
 
 void Triangle::draw(QPainter *painter) {
   pen = painter->pen();
   brush = painter->brush();
 
-  QPainterPath path;
-  path.moveTo(rect.left() + (rect.width() / 2), rect.top());
-  path.lineTo(rect.bottomLeft());
-  path.lineTo(rect.bottomRight());
-  path.lineTo(rect.left() + (rect.width() / 2), rect.top());
-
-  painter->drawPath(path);
+  painter->drawPolygon(polygon);
 }
 
 /** Redraw this shape. This should only ever happen when the user has lifted
@@ -34,6 +33,24 @@ void Triangle::redraw(QPainter *painter) {
   painter->restore();
 }
 
-void Triangle::move(const QPoint &, QPainter *) {}
+void Triangle::move(const QPoint &point, QPainter *painter) {
+  int dy = qAbs(point.y() - movingStart.y());
+  int dx = qAbs(point.x() - movingStart.x());
 
-bool Triangle::contains(const QPoint &) const { return false; }
+  if (point.x() < movingStart.x()) {
+    dx = -dx;
+  }
+
+  if (point.y() < movingStart.y()) {
+    dy = -dy;
+  }
+
+  polygon.translate(dx, dy);
+  setMovingStart(point);
+  redraw(painter);
+}
+
+bool Triangle::contains(const QPoint &point) const {
+  qDebug() << "My polygon:" << polygon;
+  return polygon.containsPoint(point, Qt::OddEvenFill);
+}

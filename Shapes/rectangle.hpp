@@ -22,7 +22,7 @@ public:
   void redraw(QPainter *painter) override;
   void move(const QPoint &, QPainter *) final;
 
-  bool contains(const QPoint &) const;
+  bool contains(const QPoint &) const final;
 
 private:
   QRect rect;

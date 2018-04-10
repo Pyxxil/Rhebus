@@ -22,7 +22,22 @@ void Rectangle::redraw(QPainter *painter) {
   painter->restore();
 }
 
-void Rectangle::move(const QPoint &, QPainter *) {}
+void Rectangle::move(const QPoint &point, QPainter *painter) {
+  int dy = qAbs(point.y() - movingStart.y());
+  int dx = qAbs(point.x() - movingStart.x());
+
+  if (point.x() < movingStart.x()) {
+    dx = -dx;
+  }
+
+  if (point.y() < movingStart.y()) {
+    dy = -dy;
+  }
+
+  rect.translate(dx, dy);
+  setMovingStart(point);
+  redraw(painter);
+}
 
 static inline qreal distance(const QPoint &a, const QPoint &b) {
   const qreal dx = (a.x() - b.x());
@@ -31,17 +46,5 @@ static inline qreal distance(const QPoint &a, const QPoint &b) {
 }
 
 bool Rectangle::contains(const QPoint &point) const {
-  const auto &topLeft = rect.topLeft();
-  const auto &topRight = rect.topRight();
-  const auto &bottomLeft = rect.bottomLeft();
-  const auto &bottomRight = rect.bottomRight();
-
-  return (distance(topLeft, point) + distance(topRight, point) ==
-          distance(topLeft, topRight)) ||
-         (distance(topRight, point) + distance(bottomRight, point) ==
-          distance(topRight, bottomRight)) ||
-         (distance(bottomRight, point) + distance(bottomLeft, point) ==
-          distance(bottomRight, bottomLeft)) ||
-         (distance(topLeft, point) + distance(bottomLeft, point) ==
-          distance(bottomLeft, topLeft));
+  return rect.contains(point);
 }

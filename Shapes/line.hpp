@@ -18,7 +18,7 @@ public:
   void redraw(QPainter *);
   void move(const QPoint &, QPainter *) final;
 
-  bool contains(const QPoint &) const;
+  bool contains(const QPoint &) const final;
 
 private:
   QPoint from;

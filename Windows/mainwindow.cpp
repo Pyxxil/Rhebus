@@ -23,6 +23,13 @@ MainWindow::MainWindow(QWidget *parent)
   ui->definitionRenderer->changeSize();
 
   definitionModel = static_cast<DefinitionModel *>(ui->definitionView->model());
+  connect(definitionModel, &QAbstractItemModel::rowsInserted,
+          [&](const QModelIndex &parent, int first, int last) {
+            for (; first <= last; ++first) {
+              ui->definitionView->expand(
+                  definitionModel->index(first, 0, parent));
+            }
+          });
 
   // static_cast<DefinitionModel *>(ui->definitionView->model())
   //    ->insertDefinition(DefinitionItem(

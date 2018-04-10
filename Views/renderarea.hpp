@@ -74,7 +74,8 @@ private:
   bool antialiased;
   bool transformed;
   bool scribbling{false};
-  bool selecting{false};
+  bool selected{false};
+  bool moving{true};
   QPixmap pixmap;
   QImage image;
 
