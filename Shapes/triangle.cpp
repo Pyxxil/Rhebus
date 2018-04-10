@@ -51,6 +51,5 @@ void Triangle::move(const QPoint &point, QPainter *painter) {
 }
 
 bool Triangle::contains(const QPoint &point) const {
-  qDebug() << "My polygon:" << polygon;
   return polygon.containsPoint(point, Qt::OddEvenFill);
 }

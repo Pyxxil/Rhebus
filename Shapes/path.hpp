@@ -23,10 +23,12 @@ public:
 
   bool contains(const QPoint &) const final;
 
-  const QList<QPoint> &allPoints() const { return points; }
+  const QList<QLine> &lines() const { return mLines; }
+  const QList<QPoint> &points() const { return mPoints; }
 
 private:
-  QList<QPoint> points;
+  QList<QLine> mLines;
+  QList<QPoint> mPoints;
 };
 
 #endif // POINTS_HPP

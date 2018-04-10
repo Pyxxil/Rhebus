@@ -104,7 +104,6 @@ void RenderArea::mousePressEvent(QMouseEvent *event) {
         selected = true;
         currentShape = shape;
         currentShape->setMovingStart(event->pos());
-        mShapes.removeAt(i - 1);
         break;
       }
     }
@@ -128,7 +127,6 @@ void RenderArea::mouseReleaseEvent(QMouseEvent *event) {
     scribbling = false;
   } else if (event->button() == Qt::RightButton) {
     draw(event->pos());
-    push();
     moving = false;
   }
 }
@@ -179,7 +177,7 @@ void RenderArea::draw(const QPoint &endPoint) {
       // painter.drawPoints(points, 4);
       if (currentShape) {
         QList<QPoint> points =
-            static_cast<Path *>(currentShape.data())->allPoints();
+            static_cast<Path *>(currentShape.data())->points();
         currentShape = QSharedPointer<Path>(new Path(points << endPoint));
       } else {
         currentShape = QSharedPointer<Path>(
@@ -231,8 +229,8 @@ void RenderArea::draw(const QPoint &endPoint) {
 
     update(rect);
   } else if (moving) {
-    qDebug() << "Moving current shape to" << endPoint;
     currentShape->move(endPoint, &painter);
+    update();
   }
 }
 

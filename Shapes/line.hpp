@@ -21,8 +21,7 @@ public:
   bool contains(const QPoint &) const final;
 
 private:
-  QPoint from;
-  QPoint to;
+  QLine line;
 };
 
 #endif // LINE_HPP
