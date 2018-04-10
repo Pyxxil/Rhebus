@@ -49,8 +49,8 @@ void Path::move(const QPoint &point, QPainter *painter) {
   redraw(painter);
 }
 
-static inline qreal distance(const QPoint &pa, const QPoint &pb,
-                             const QPoint &pc) {
+static inline qreal distance(const QPoint &pb, const QPoint &pc,
+                             const QPoint &pa) {
   const qreal a = pb.y() - pc.y();
   const qreal b = pc.x() - pb.x();
   const qreal c = pb.x() * pc.y() - pc.x() * pb.y();
@@ -60,9 +60,14 @@ static inline qreal distance(const QPoint &pa, const QPoint &pb,
 
 bool Path::contains(const QPoint &point) const {
   for (int i = 0; i < mLines.length(); ++i) {
-    if (distance(mLines[i].p1(), mLines[i].p2(), point) <=
-        (pen.width() / 4.0)) {
-      return true;
+    auto d = distance(mLines[i].p1(), mLines[i].p2(), point);
+    if (d <= (pen.width() / 2.0)) {
+      QRect r(mLines[i].p1(), mLines[i].p2());
+      r.setWidth(pen.width() / 2.0);
+      r.setHeight(pen.width() / 2.0);
+      if (r.contains(point)) {
+        return true;
+      }
     }
   }
 

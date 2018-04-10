@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QPainter>
 #include <QtMath>
 
@@ -39,8 +40,8 @@ void Line::move(const QPoint &point, QPainter *painter) {
   redraw(painter);
 }
 
-static inline qreal distance(const QPoint &pa, const QPoint &pb,
-                             const QPoint &pc) {
+static inline qreal distance(const QPoint &pb, const QPoint &pc,
+                             const QPoint &pa) {
   const qreal a = pb.y() - pc.y();
   const qreal b = pc.x() - pb.x();
   const qreal c = pb.x() * pc.y() - pc.x() * pb.y();
@@ -49,5 +50,8 @@ static inline qreal distance(const QPoint &pa, const QPoint &pb,
 }
 
 bool Line::contains(const QPoint &point) const {
-  return distance(line.p1(), line.p2(), point) <= (pen.width() / 2.0);
+  auto d = distance(line.p1(), line.p2(), point);
+  qDebug() << "Distance:" << d;
+  return d <= (pen.width() / 2.0) &&
+         QRect(line.p1(), line.p2()).contains(point);
 }
