@@ -20,10 +20,10 @@ public:
   void redraw(QPainter *) override;
   void move(const QPoint &, QPainter *) final;
 
-  bool contains(const QPoint &) const;
+  bool contains(const QPoint &) const final;
 
 private:
-  QRect rect;
+  QPolygon polygon;
 };
 
 #endif // TRIANGLE_HPP

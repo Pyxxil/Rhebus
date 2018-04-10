@@ -34,7 +34,7 @@ public:
   }
   void setBrush(const QBrush &brush) { this->brush = brush; }
 
-  virtual bool contains(const QPoint &) { return false; }
+  virtual bool contains(const QPoint &) const { return false; }
 
 protected:
   QPen pen;
