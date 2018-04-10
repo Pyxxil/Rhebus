@@ -6,7 +6,7 @@
 #include "Items/descriptionitem.hpp"
 
 AddDefinitionWizard::AddDefinitionWizard(QWidget *parent)
-    : QWizard(parent), ui(new Ui::AddDefinitionWizard) {
+    : QWizard(parent), ui(new Ui::AddDefinitionWizard), mUpdater(nullptr) {
   ui->setupUi(this);
   ui->renderer->setMinimumWidth(width() - 100);
   ui->renderer->setMinimumHeight(height() - ui->shapeComboBox->height() - 100);
@@ -52,6 +52,16 @@ void AddDefinitionWizard::setDefinitionName(const QString &name) {
 
 void AddDefinitionWizard::setDescription(const DescriptionItem *item) {
   ui->renderer->setShapes(item->shapes());
+}
+
+void AddDefinitionWizard::setUpdater(ShapeItem *up)
+{
+  mUpdater = up;
+}
+
+void AddDefinitionWizard::setShapes(const QList<QSharedPointer<Shape> > &shapes)
+{
+  ui->renderer->setShapes(shapes);
 }
 
 void AddDefinitionWizard::openPenColourChooser() {

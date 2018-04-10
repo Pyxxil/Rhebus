@@ -3,7 +3,7 @@
 
 #include "rootitem.hpp"
 
-class DefinitionItem;
+class ShapeItem;
 
 class RootDefinitionItem : public RootItem {
 public:
@@ -11,12 +11,12 @@ public:
   ~RootDefinitionItem() = default;
 
   void addDefinition(const QString &name);
-  DefinitionItem *definition(int row) const;
+  ShapeItem *definition(int row) const;
 
-  const QList<DefinitionItem *> definitions() const { return mDefinitions; }
+  const QList<ShapeItem *> definitions() const { return mDefinitions; }
 
 private:
-  QList<DefinitionItem *> mDefinitions;
+  QList<ShapeItem *> mDefinitions;
 };
 
 #endif // ROOTDEFINITION_HPP

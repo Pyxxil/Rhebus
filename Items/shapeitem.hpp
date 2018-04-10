@@ -11,10 +11,10 @@
 class Shape;
 class DescriptionItem;
 
-class DefinitionItem : public RootItem {
+class ShapeItem : public RootItem {
 public:
-  explicit DefinitionItem(RootDefinitionItem *parent, const QString &tName);
-  ~DefinitionItem() { qDeleteAll(descriptions); }
+  explicit ShapeItem(RootDefinitionItem *parent, const QString &tName);
+  ~ShapeItem() { qDeleteAll(descriptions); }
 
   RootDefinitionItem *parent() { return mParent; }
   const QString &name() const { return mName; }

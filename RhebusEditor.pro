@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = RhebusEditor
 TEMPLATE = app
 
-CONFIG += c++1z
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -41,9 +41,9 @@ SOURCES += \
     Items/layeritem.cpp \
     Items/rootitem.cpp \
     Items/descriptionitem.cpp \
-    Items/definitionitem.cpp \
     Items/rootdefinitionitem.cpp \
-    Items/rootlayeritem.cpp
+    Items/rootlayeritem.cpp \
+    Items/shapeitem.cpp
 
 HEADERS += \
     Windows/mainwindow.hpp \
@@ -57,12 +57,12 @@ HEADERS += \
     Shapes/rectangle.hpp \
     Shapes/line.hpp \
     Shapes/path.hpp \
-    Items/definitionitem.hpp \
     Items/descriptionitem.hpp \
     Items/rootitem.hpp \
     Items/layeritem.hpp \
     Items/rootdefinitionitem.hpp \
-    Items/rootlayeritem.hpp
+    Items/rootlayeritem.hpp \
+    Items/shapeitem.hpp
 
 FORMS += \
     Windows/mainwindow.ui \

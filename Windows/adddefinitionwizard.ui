@@ -24,9 +24,9 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QLabel" name="definitionNameLabel">
+       <widget class="QLabel" name="shapeNameLabel">
         <property name="text">
-         <string>Definition Name:</string>
+         <string>Shape Name:</string>
         </property>
        </widget>
       </item>

@@ -10,6 +10,7 @@ class AddDefinitionWizard;
 #include "Shapes/shape.hpp"
 
 class DescriptionItem;
+class ShapeItem;
 
 class AddDefinitionWizard : public QWizard {
   Q_OBJECT
@@ -24,6 +25,11 @@ public:
   void setDefinitionName(const QString &);
   void setDescription(const DescriptionItem *);
 
+  void setUpdater(ShapeItem *);
+  ShapeItem *updater() const { return mUpdater; }
+
+  void setShapes(const QList<QSharedPointer<Shape>>& shapes);
+
 public slots:
   void openPenColourChooser();
   void openBrushColourChooser();
@@ -36,6 +42,7 @@ signals:
 
 private:
   Ui::AddDefinitionWizard *ui;
+  ShapeItem *mUpdater;
 };
 
 #endif // ADDDEFINITIONWIZARD_HPP

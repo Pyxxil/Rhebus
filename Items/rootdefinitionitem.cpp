@@ -1,17 +1,17 @@
 #include "rootdefinitionitem.hpp"
-#include "definitionitem.hpp"
+#include "shapeitem.hpp"
 
 #include <QDebug>
 
 RootDefinitionItem::RootDefinitionItem(RootItem *parent)
-    : RootItem(QVector<QVariant>() << "Definitions", parent) {}
+    : RootItem(QVector<QVariant>() << "Shapes", parent) {}
 
 void RootDefinitionItem::addDefinition(const QString &name) {
-  DefinitionItem *def = new DefinitionItem(this, name);
+  ShapeItem *def = new ShapeItem(this, name);
   mDefinitions.append(def);
   children().append(def);
 }
 
-DefinitionItem *RootDefinitionItem::definition(int row) const {
+ShapeItem *RootDefinitionItem::definition(int row) const {
   return definitions().at(row);
 }

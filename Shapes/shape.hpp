@@ -10,7 +10,7 @@ class Shape {
 public:
   Shape();
   Shape(const Shape &rhs) = default;
-  Shape(Shape &&rhs) noexcept = default;
+  // Shape(Shape &&rhs) noexcept = default;
 
   Shape &operator=(const Shape &rhs) = default;
   Shape &operator=(Shape &&rhs) noexcept = default;

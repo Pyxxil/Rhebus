@@ -1,9 +1,9 @@
 #include "descriptionitem.hpp"
-#include "definitionitem.hpp"
+#include "shapeitem.hpp"
 
 #include <QPainter>
 
-DescriptionItem::DescriptionItem(DefinitionItem *parent)
+DescriptionItem::DescriptionItem(ShapeItem *parent)
     : RootItem(QVector<QVariant>() << "draw", parent) {}
 
 void DescriptionItem::render(QPainter *painter) {

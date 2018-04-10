@@ -9,7 +9,7 @@ public:
   ~Line() = default;
 
   Line(const Line &rhs) = default;
-  Line(Line &&rhs) noexcept = default;
+  // Line(Line &&rhs) noexcept = default;
 
   Line &operator=(const Line &rhs) = default;
   Line &operator=(Line &&rhs) noexcept = default;

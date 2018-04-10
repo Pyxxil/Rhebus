@@ -10,15 +10,16 @@
 #include "rootitem.hpp"
 
 class QPainter;
-class DefinitionItem;
+class ShapeItem;
 
 class DescriptionItem : public RootItem {
 public:
-  explicit DescriptionItem(DefinitionItem *parent);
+  explicit DescriptionItem(ShapeItem *parent);
   ~DescriptionItem() = default;
 
-  DefinitionItem *parent() const;
+  ShapeItem *parent() const;
 
+  void setShapes(const QList<QSharedPointer<Shape>>& tShapes) { mShapes = tShapes; }
   void addShape(const QSharedPointer<Shape> &shape) { mShapes.append(shape); }
   void addShapes(const QList<QSharedPointer<Shape>> &tShapes) {
     std::for_each(tShapes.begin(), tShapes.end(),
@@ -31,7 +32,7 @@ public:
   const QList<QSharedPointer<Shape>> &shapes() const { return mShapes; }
 
 private:
-  DefinitionItem *mParent;
+  ShapeItem *mParent;
   QList<QSharedPointer<Shape>> mShapes;
 };
 

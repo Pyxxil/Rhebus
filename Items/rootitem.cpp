@@ -16,8 +16,8 @@ QVariant RootItem::data(int column) const { return itemData.value(column); }
 int RootItem::childCount() const { return childItems.count(); }
 
 int RootItem::childNumber() const {
-  if (mParent) {
-    return mParent->childItems.indexOf(const_cast<RootItem *>(this));
+  if (parent()) {
+    return parent()->children().indexOf(const_cast<RootItem *>(this));
   }
 
   return 0;
@@ -61,7 +61,7 @@ bool RootItem::removeChildren(int position, int count) {
   }
 
   for (int row = 0; row < count; ++row) {
-    // delete childItems.takeAt(position);
+    delete childItems.takeAt(position);
   }
 
   return true;

@@ -8,7 +8,7 @@ class RootLayerItem;
 
 class RootItem {
 public:
-  explicit RootItem(const QVector<QVariant> &data, RootItem *parent)
+  explicit RootItem(const QVector<QVariant> &data, RootItem *parent = nullptr)
       : itemData(data), childItems(), mParent(parent) {}
   ~RootItem();
 

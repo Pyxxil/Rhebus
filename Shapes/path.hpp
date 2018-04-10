@@ -12,7 +12,7 @@ public:
   ~Path() = default;
 
   Path(const Path &rhs) = default;
-  Path(Path &&rhs) noexcept = default;
+  // Path(Path &&rhs) noexcept = default;
 
   Path &operator=(const Path &rhs) = default;
   Path &operator=(Path &&rhs) noexcept = default;

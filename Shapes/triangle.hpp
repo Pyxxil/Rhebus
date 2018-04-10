@@ -11,7 +11,7 @@ public:
   ~Triangle() = default;
 
   Triangle(const Triangle &rhs) = default;
-  Triangle(Triangle &&rhs) noexcept = default;
+  // Triangle(Triangle &&rhs) noexcept = default;
 
   Triangle &operator=(const Triangle &rhs) = default;
   Triangle &operator=(Triangle &&rhs) noexcept = default;

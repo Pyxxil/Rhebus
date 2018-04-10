@@ -1,8 +1,8 @@
 #include "definitionmodel.hpp"
-#include "Items/definitionitem.hpp"
 #include "Items/rootdefinitionitem.hpp"
 #include "Items/rootitem.hpp"
 #include "Items/rootlayeritem.hpp"
+#include "Items/shapeitem.hpp"
 
 #include <QDebug>
 

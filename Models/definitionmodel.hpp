@@ -7,7 +7,7 @@ class RootItem;
 class Shape;
 class RootDefinitionItem;
 class RootLayerItem;
-class DefinitionItem;
+class ShapeItem;
 
 class DefinitionModel : public QAbstractItemModel {
   Q_OBJECT

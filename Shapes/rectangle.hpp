@@ -13,7 +13,7 @@ public:
   ~Rectangle() = default;
 
   Rectangle(const Rectangle &rhs) = default;
-  Rectangle(Rectangle &&rhs) noexcept = default;
+  // Rectangle(Rectangle &&rhs) noexcept = default;
 
   Rectangle &operator=(const Rectangle &rhs) = default;
   Rectangle &operator=(Rectangle &&rhs) noexcept = default;

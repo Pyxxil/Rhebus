@@ -4,8 +4,8 @@
 
 #include <QDebug>
 
-#include "Items/definitionitem.hpp"
 #include "Items/descriptionitem.hpp"
+#include "Items/shapeitem.hpp"
 #include "Models/definitionmodel.hpp"
 #include "adddefinitionwizard.hpp"
 
@@ -44,7 +44,7 @@ void MainWindow::customMenuRequested(QPoint point) {
   QModelIndex index = ui->definitionView->indexAt(point);
 
   QMenu menu(this);
-  QAction *addDef = new QAction(tr("Add Definition"), this);
+  QAction *addDef = new QAction(tr("Add Shape"), this);
   menu.addAction(addDef);
   connect(addDef, SIGNAL(triggered(bool)), this, SLOT(addDefinition(bool)));
 
@@ -52,7 +52,7 @@ void MainWindow::customMenuRequested(QPoint point) {
     RootItem *item = static_cast<RootItem *>(index.internalPointer());
 
     if (item->isDescription() || item->isDefinition()) {
-      QAction *editDef = new QAction(tr("Edit Definition"), this);
+      QAction *editDef = new QAction(tr("Edit Shape"), this);
       menu.addAction(editDef);
       connect(editDef, SIGNAL(triggered(bool)), this,
               SLOT(editDefinition(bool)));
@@ -81,15 +81,17 @@ void MainWindow::editDefinition(bool) {
   RootItem *selected = static_cast<RootItem *>(
       ui->definitionView->currentIndex().internalPointer());
 
-  DefinitionItem *item;
+  ShapeItem *item;
 
   if (selected->isDescription()) {
-    item = static_cast<DefinitionItem *>(selected->parent());
+    item = static_cast<ShapeItem *>(selected->parent());
   } else {
-    item = static_cast<DefinitionItem *>(selected);
+    item = static_cast<ShapeItem *>(selected);
   }
 
   wizard.setDefinitionName(item->name());
+  wizard.setShapes(item->description(0)->shapes());
+  wizard.setUpdater(item);
 
   connect(&wizard, SIGNAL(accepted()), this,
           SLOT(addDefinitionWizardAccepted()));
@@ -110,5 +112,13 @@ void MainWindow::copyDescription(bool) {
 
 void MainWindow::addDefinitionWizardAccepted() {
   AddDefinitionWizard *wizard = static_cast<AddDefinitionWizard *>(sender());
-  definitionModel->insertDefinition(wizard->definitionName(), wizard->shapes());
+  ShapeItem *up = wizard->updater();
+  if (up != nullptr) {
+    up->setData(0, wizard->definitionName());
+    up->description(0)->setShapes(wizard->shapes());
+    if (up == ui->definitionView->currentIndex().internalPointer())
+    emit ui->definitionView->render(up->description(0));
+  } else {
+    definitionModel->insertDefinition(wizard->definitionName(), wizard->shapes());
+  }
 }
