@@ -6,6 +6,8 @@
 ShapeItem::ShapeItem(RootDefinitionItem *parent, const QString &tName)
     : RootItem(QVector<QVariant>() << tName, parent), mName(tName) {}
 
+ShapeItem::~ShapeItem() { qDeleteAll(descriptions); }
+
 void ShapeItem::addDescription(const QList<QSharedPointer<Shape>> &tShapes) {
   DescriptionItem *desc = new DescriptionItem(this);
   desc->addShapes(tShapes);
@@ -24,10 +26,9 @@ int ShapeItem::childCount() const { return descriptions.count(); }
 
 int ShapeItem::childNumber() {
   if (parent()) {
-    return parent()->definitions().indexOf(const_cast<ShapeItem *>(this));
+    return static_cast<RootDefinitionItem *>(parent())->definitions().indexOf(
+        const_cast<ShapeItem *>(this));
   }
 
   return 0;
 }
-
-int ShapeItem::columnCount() const { return 1; }

@@ -1,6 +1,8 @@
 #ifndef DESCRIPTIONITEM_HPP
 #define DESCRIPTIONITEM_HPP
 
+#include <QDebug>
+
 #include "Shapes/line.hpp"
 #include "Shapes/path.hpp"
 #include "Shapes/rectangle.hpp"
@@ -15,15 +17,38 @@ class ShapeItem;
 class DescriptionItem : public RootItem {
 public:
   explicit DescriptionItem(ShapeItem *parent);
-  ~DescriptionItem() = default;
+  virtual ~DescriptionItem() = default;
 
   ShapeItem *parent() const;
 
-  void setShapes(const QList<QSharedPointer<Shape>>& tShapes) { mShapes = tShapes; }
-  void addShape(const QSharedPointer<Shape> &shape) { mShapes.append(shape); }
+  void setShapes(const QList<QSharedPointer<Shape>> &tShapes) {
+    mShapes.clear();
+    for (auto &&shape : tShapes) {
+      addShape(shape);
+    }
+  }
+  void addShape(const QSharedPointer<Shape> &shape) {
+    mShapes.append(QSharedPointer<Shape>(shape->clone()));
+    //    const QString &t = shape->name();
+    //    qDebug() << "Adding shape:" << t;
+    //    if (t == "Triangle") {
+    //      Triangle *n = static_cast<Triangle *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Rectangle") {
+    //      Rectangle *n = static_cast<Rectangle *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Line") {
+    //      Line *n = static_cast<Line *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Path") {
+    //      Path *n = static_cast<Path *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    }
+  }
   void addShapes(const QList<QSharedPointer<Shape>> &tShapes) {
-    std::for_each(tShapes.begin(), tShapes.end(),
-                  [this](auto &&shape) { addShape(shape); });
+    for (auto &&shape : tShapes) {
+      addShape(shape);
+    }
   }
   void render(QPainter *painter);
 

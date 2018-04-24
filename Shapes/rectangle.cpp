@@ -1,5 +1,6 @@
 #include "rectangle.hpp"
 
+#include <QDebug>
 #include <QPainter>
 #include <QtMath>
 
@@ -22,7 +23,7 @@ void Rectangle::redraw(QPainter *painter) {
   painter->restore();
 }
 
-void Rectangle::move(const QPoint &point, QPainter *painter) {
+void Rectangle::__move(const QPoint &point) {
   int dy = qAbs(point.y() - movingStart.y());
   int dx = qAbs(point.x() - movingStart.x());
 
@@ -35,16 +36,27 @@ void Rectangle::move(const QPoint &point, QPainter *painter) {
   }
 
   rect.translate(dx, dy);
-  setMovingStart(point);
-  redraw(painter);
 }
 
-static inline qreal distance(const QPoint &a, const QPoint &b) {
-  const qreal dx = (a.x() - b.x());
-  const qreal dy = (a.y() - b.y());
-  return qSqrt(dx * dx + dy * dy);
+void Rectangle::move(const QPoint &point, QPainter *painter) {
+  __move(point);
+  setMovingStart(point);
+  redraw(painter);
 }
 
 bool Rectangle::contains(const QPoint &point) const {
   return rect.contains(point);
 }
+
+Rectangle *Rectangle::scaled() { return this; }
+
+Rectangle *Rectangle::rotated() { Rectangle *rec = clone(); }
+
+Rectangle *Rectangle::moveToRealZero(const QPoint &realZero) {
+  Rectangle *rec = clone();
+  rec->setMovingStart(QPoint(0, 0));
+  rec->__move(realZero);
+  return rec;
+}
+
+Rectangle *Rectangle::placeAt() { return this; }

@@ -1,4 +1,5 @@
 #include "definitionmodel.hpp"
+#include "Items/layeritem.hpp"
 #include "Items/rootdefinitionitem.hpp"
 #include "Items/rootitem.hpp"
 #include "Items/rootlayeritem.hpp"
@@ -183,6 +184,18 @@ void DefinitionModel::insertDefinition(
   endInsertRows();
 }
 
+void DefinitionModel::insertObject(LayerItem *layer, const QString &name) {
+  beginInsertRows(QModelIndex(), 0, 1);
+  layer->addObject(name);
+  endInsertRows();
+}
+
+void DefinitionModel::insertLayer(const QString &name) {
+  beginInsertRows(QModelIndex(), 0, 1);
+  layers()->addLayer(name);
+  endInsertRows();
+}
+
 void DefinitionModel::setupModelData(RootItem *parent) {
-  parent->setUp(&mDefinitions, &layers);
+  parent->setUp(&mDefinitions, &mLayers);
 }

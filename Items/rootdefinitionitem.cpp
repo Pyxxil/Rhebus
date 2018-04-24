@@ -15,3 +15,13 @@ void RootDefinitionItem::addDefinition(const QString &name) {
 ShapeItem *RootDefinitionItem::definition(int row) const {
   return definitions().at(row);
 }
+
+ShapeItem *RootDefinitionItem::findByName(const QString &name) {
+  for (auto &&def : definitions()) {
+    if (def->data(0) == name) {
+      return def;
+    }
+  }
+
+  return nullptr;
+}

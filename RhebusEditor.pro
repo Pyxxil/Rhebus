@@ -11,13 +11,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = RhebusEditor
 TEMPLATE = app
 
-CONFIG += c++17
+CONFIG += c++1z
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+
+macx {
+    QMAKE_MAC_SDK = macosx10.13
+}
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -43,7 +47,12 @@ SOURCES += \
     Items/descriptionitem.cpp \
     Items/rootdefinitionitem.cpp \
     Items/rootlayeritem.cpp \
-    Items/shapeitem.cpp
+    Items/shapeitem.cpp \
+    Items/objectitem.cpp \
+    Windows/layerdialog.cpp \
+    Windows/objectdialog.cpp \
+    Windows/programwindow.cpp \
+    Views/canvasrenderer.cpp
 
 HEADERS += \
     Windows/mainwindow.hpp \
@@ -62,8 +71,16 @@ HEADERS += \
     Items/layeritem.hpp \
     Items/rootdefinitionitem.hpp \
     Items/rootlayeritem.hpp \
-    Items/shapeitem.hpp
+    Items/shapeitem.hpp \
+    Items/objectitem.hpp \
+    Windows/layerdialog.hpp \
+    Windows/objectdialog.hpp \
+    Windows/programwindow.hpp \
+    Views/canvasrenderer.hpp
 
 FORMS += \
     Windows/mainwindow.ui \
-    Windows/adddefinitionwizard.ui
+    Windows/adddefinitionwizard.ui \
+    Windows/layerdialog.ui \
+    Windows/objectdialog.ui \
+    Windows/programwindow.ui

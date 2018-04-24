@@ -34,6 +34,24 @@ void Triangle::redraw(QPainter *painter) {
 }
 
 void Triangle::move(const QPoint &point, QPainter *painter) {
+  __move(point);
+  setMovingStart(point);
+  redraw(painter);
+}
+
+bool Triangle::contains(const QPoint &point) const {
+  return polygon.containsPoint(point, Qt::OddEvenFill);
+}
+
+Triangle *Triangle::scaled() { return this; }
+
+Triangle *Triangle::rotated() { return this; }
+
+Triangle *Triangle::moveToRealZero(const QPoint &) { return this; }
+
+Triangle *Triangle::placeAt() { return this; }
+
+void Triangle::__move(const QPoint &point) {
   int dy = qAbs(point.y() - movingStart.y());
   int dx = qAbs(point.x() - movingStart.x());
 
@@ -46,10 +64,4 @@ void Triangle::move(const QPoint &point, QPainter *painter) {
   }
 
   polygon.translate(dx, dy);
-  setMovingStart(point);
-  redraw(painter);
-}
-
-bool Triangle::contains(const QPoint &point) const {
-  return polygon.containsPoint(point, Qt::OddEvenFill);
 }

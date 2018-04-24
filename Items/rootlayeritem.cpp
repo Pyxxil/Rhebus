@@ -5,5 +5,7 @@ RootLayerItem::RootLayerItem(RootItem *parent)
     : RootItem(QVector<QVariant>() << "Layers", parent) {}
 
 void RootLayerItem::addLayer(const QString &name) {
-  mLayers.append(new LayerItem(this, name));
+  LayerItem *layer = new LayerItem(this, name);
+  mLayers.append(layer);
+  children().append(layer);
 }

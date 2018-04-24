@@ -54,13 +54,10 @@ void AddDefinitionWizard::setDescription(const DescriptionItem *item) {
   ui->renderer->setShapes(item->shapes());
 }
 
-void AddDefinitionWizard::setUpdater(ShapeItem *up)
-{
-  mUpdater = up;
-}
+void AddDefinitionWizard::setUpdater(ShapeItem *up) { mUpdater = up; }
 
-void AddDefinitionWizard::setShapes(const QList<QSharedPointer<Shape> > &shapes)
-{
+void AddDefinitionWizard::setShapes(
+    const QList<QSharedPointer<Shape>> &shapes) {
   ui->renderer->setShapes(shapes);
 }
 
@@ -79,6 +76,7 @@ void AddDefinitionWizard::openPenColourChooser() {
 void AddDefinitionWizard::openBrushColourChooser() {
   QColorDialog colourDialog;
   colourDialog.setModal(true);
+  colourDialog.setOption(QColorDialog::ShowAlphaChannel, true);
 
   connect(&colourDialog, SIGNAL(currentColorChanged(QColor)), this,
           SLOT(brushColourChanged(QColor)));

@@ -12,7 +12,7 @@ public:
   ~Path() = default;
 
   Path(const Path &rhs) = default;
-  // Path(Path &&rhs) noexcept = default;
+  Path(Path &&rhs) = default;
 
   Path &operator=(const Path &rhs) = default;
   Path &operator=(Path &&rhs) noexcept = default;
@@ -25,6 +25,16 @@ public:
 
   const QList<QLine> &lines() const { return mLines; }
   const QList<QPoint> &points() const { return mPoints; }
+
+  Path *clone() const final { return new Path(*this); }
+  QString name() const final { return "Path"; }
+
+  Path *scaled() final;
+  Path *rotated() final;
+  Path *moveToRealZero(const QPoint &) final;
+  Path *placeAt() final;
+
+  void __move(const QPoint &point) final;
 
 private:
   QList<QLine> mLines;

@@ -2,12 +2,14 @@
 #define DEFINITIONMODEL_HPP
 
 #include <QAbstractItemModel>
+#include <QColor>
 
 class RootItem;
 class Shape;
 class RootDefinitionItem;
 class RootLayerItem;
 class ShapeItem;
+class LayerItem;
 
 class DefinitionModel : public QAbstractItemModel {
   Q_OBJECT
@@ -40,13 +42,23 @@ public:
                         const QList<QSharedPointer<Shape>> shapes);
 
   RootDefinitionItem *definitions() const { return mDefinitions; }
+  RootLayerItem *layers() const { return mLayers; }
+
+  const QColor &backgroundColour() const { return bgColour; }
+
+  void insertObject(LayerItem *layer, const QString &name);
+
+public slots:
+  void setBackgroundColour(const QColor &colour) { bgColour = colour; }
+  void insertLayer(const QString &name);
 
 private:
   void setupModelData(RootItem *parent);
 
   RootItem *rootItem;
   RootDefinitionItem *mDefinitions;
-  RootLayerItem *layers;
+  RootLayerItem *mLayers;
+  QColor bgColour{QColor(255, 255, 255)};
 };
 
 #endif // DEFINITIONMODEL_HPP

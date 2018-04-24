@@ -18,7 +18,25 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
 }
 
 void RenderArea::setShapes(QList<QSharedPointer<Shape>> shapes) {
-  mShapes = shapes;
+  mShapes.clear();
+  for (auto &&shape : shapes) {
+    mShapes.append(QSharedPointer<Shape>(shape->clone()));
+    //    const QString &t = shape->name();
+    //    qDebug() << "Adding shape:" << t;
+    //    if (t == "Triangle") {
+    //      Triangle *n = static_cast<Triangle *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Rectangle") {
+    //      Rectangle *n = static_cast<Rectangle *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Line") {
+    //      Line *n = static_cast<Line *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    } else if (t == "Path") {
+    //      Path *n = static_cast<Path *>(shape.data())->clone();
+    //      mShapes.append(QSharedPointer<Shape>(n));
+    //    }
+  }
   clearImage();
 }
 

@@ -24,18 +24,7 @@ void Line::redraw(QPainter *painter) {
 }
 
 void Line::move(const QPoint &point, QPainter *painter) {
-  int dy = qAbs(point.y() - movingStart.y());
-  int dx = qAbs(point.x() - movingStart.x());
-
-  if (point.x() < movingStart.x()) {
-    dx = -dx;
-  }
-
-  if (point.y() < movingStart.y()) {
-    dy = -dy;
-  }
-
-  line.translate(dx, dy);
+  __move(point);
   setMovingStart(point);
   redraw(painter);
 }
@@ -51,7 +40,29 @@ static inline qreal distance(const QPoint &pb, const QPoint &pc,
 
 bool Line::contains(const QPoint &point) const {
   auto d = distance(line.p1(), line.p2(), point);
-  qDebug() << "Distance:" << d;
   return d <= (pen.width() / 2.0) &&
          QRect(line.p1(), line.p2()).contains(point);
+}
+
+Line *Line::scaled() { return this; }
+
+Line *Line::rotated() { return this; }
+
+Line *Line::moveToRealZero(const QPoint &) { return this; }
+
+Line *Line::placeAt() { return this; }
+
+void Line::__move(const QPoint &point) {
+  int dy = qAbs(point.y() - movingStart.y());
+  int dx = qAbs(point.x() - movingStart.x());
+
+  if (point.x() < movingStart.x()) {
+    dx = -dx;
+  }
+
+  if (point.y() < movingStart.y()) {
+    dy = -dy;
+  }
+
+  line.translate(dx, dy);
 }

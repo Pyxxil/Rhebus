@@ -13,7 +13,9 @@ public:
   void addLayer(const QString &name);
   LayerItem *layer(int row) const { return mLayers[row]; }
 
-  const QList<LayerItem *> layers() const { return mLayers; }
+  const QList<LayerItem *> &layers() const { return mLayers; }
+
+  bool isRootLayer() const final { return true; }
 
 private:
   QList<LayerItem *> mLayers;

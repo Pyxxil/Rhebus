@@ -28,7 +28,7 @@ public:
   void setUpdater(ShapeItem *);
   ShapeItem *updater() const { return mUpdater; }
 
-  void setShapes(const QList<QSharedPointer<Shape>>& shapes);
+  void setShapes(const QList<QSharedPointer<Shape>> &shapes);
 
 public slots:
   void openPenColourChooser();

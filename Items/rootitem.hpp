@@ -10,7 +10,7 @@ class RootItem {
 public:
   explicit RootItem(const QVector<QVariant> &data, RootItem *parent = nullptr)
       : itemData(data), childItems(), mParent(parent) {}
-  ~RootItem();
+  virtual ~RootItem();
 
   RootItem *child(int row);
   int childCount() const;
@@ -35,6 +35,7 @@ public:
   virtual bool isDefinition() const { return false; }
   virtual bool isLayer() const { return false; }
   virtual bool isObject() const { return false; }
+  virtual bool isRootLayer() const { return false; }
 
 private:
   QVector<QVariant> itemData;

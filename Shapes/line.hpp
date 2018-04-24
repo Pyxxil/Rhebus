@@ -9,7 +9,7 @@ public:
   ~Line() = default;
 
   Line(const Line &rhs) = default;
-  // Line(Line &&rhs) noexcept = default;
+  Line(Line &&rhs) = default;
 
   Line &operator=(const Line &rhs) = default;
   Line &operator=(Line &&rhs) noexcept = default;
@@ -19,6 +19,16 @@ public:
   void move(const QPoint &, QPainter *) final;
 
   bool contains(const QPoint &) const final;
+
+  Line *clone() const final { return new Line(*this); }
+  QString name() const final { return "Line"; }
+
+  Line *scaled() final;
+  Line *rotated() final;
+  Line *moveToRealZero(const QPoint &) final;
+  Line *placeAt() final;
+
+  void __move(const QPoint &point) final;
 
 private:
   QLine line;

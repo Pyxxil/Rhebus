@@ -10,7 +10,7 @@ class Shape {
 public:
   Shape();
   Shape(const Shape &rhs) = default;
-  // Shape(Shape &&rhs) noexcept = default;
+  Shape(Shape &&rhs) = default;
 
   Shape &operator=(const Shape &rhs) = default;
   Shape &operator=(Shape &&rhs) noexcept = default;
@@ -24,6 +24,11 @@ public:
   virtual void move(const QPoint &, QPainter *) {}
   virtual void setMovingStart(const QPoint &start) { movingStart = start; }
 
+  virtual Shape *scaled() = 0;
+  virtual Shape *rotated() = 0;
+  virtual Shape *moveToRealZero(const QPoint &) = 0;
+  virtual Shape *placeAt() = 0;
+
   virtual ShapeType type() { return None; }
 
   const QPoint &moveFrom() const { return movingStart; }
@@ -35,6 +40,11 @@ public:
   void setBrush(const QBrush &brush) { this->brush = brush; }
 
   virtual bool contains(const QPoint &) const { return false; }
+  virtual Shape *clone() const = 0;
+
+  virtual QString name() const = 0;
+
+  virtual void __move(const QPoint &point) = 0;
 
 protected:
   QPen pen;

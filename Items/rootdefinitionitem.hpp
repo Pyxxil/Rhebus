@@ -15,6 +15,8 @@ public:
 
   const QList<ShapeItem *> definitions() const { return mDefinitions; }
 
+  ShapeItem *findByName(const QString &name);
+
 private:
   QList<ShapeItem *> mDefinitions;
 };

@@ -30,21 +30,7 @@ void Path::redraw(QPainter *painter) {
 }
 
 void Path::move(const QPoint &point, QPainter *painter) {
-  int dy = qAbs(point.y() - movingStart.y());
-  int dx = qAbs(point.x() - movingStart.x());
-
-  if (point.x() < movingStart.x()) {
-    dx = -dx;
-  }
-
-  if (point.y() < movingStart.y()) {
-    dy = -dy;
-  }
-
-  for (auto &line : mLines) {
-    line.translate(dx, dy);
-  }
-
+  __move(point);
   setMovingStart(point);
   redraw(painter);
 }
@@ -72,4 +58,29 @@ bool Path::contains(const QPoint &point) const {
   }
 
   return false;
+}
+
+Path *Path::scaled() { return this; }
+
+Path *Path::rotated() { return this; }
+
+Path *Path::moveToRealZero(const QPoint &) { return this; }
+
+Path *Path::placeAt() { return this; }
+
+void Path::__move(const QPoint &point) {
+  int dy = qAbs(point.y() - movingStart.y());
+  int dx = qAbs(point.x() - movingStart.x());
+
+  if (point.x() < movingStart.x()) {
+    dx = -dx;
+  }
+
+  if (point.y() < movingStart.y()) {
+    dy = -dy;
+  }
+
+  for (auto &line : mLines) {
+    line.translate(dx, dy);
+  }
 }

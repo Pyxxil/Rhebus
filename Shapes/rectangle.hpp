@@ -13,7 +13,7 @@ public:
   ~Rectangle() = default;
 
   Rectangle(const Rectangle &rhs) = default;
-  // Rectangle(Rectangle &&rhs) noexcept = default;
+  Rectangle(Rectangle &&rhs) = default;
 
   Rectangle &operator=(const Rectangle &rhs) = default;
   Rectangle &operator=(Rectangle &&rhs) noexcept = default;
@@ -23,6 +23,16 @@ public:
   void move(const QPoint &, QPainter *) final;
 
   bool contains(const QPoint &) const final;
+
+  Rectangle *clone() const final { return new Rectangle(*this); }
+  QString name() const final { return "Rectangle"; }
+
+  Rectangle *scaled() final;
+  Rectangle *rotated() final;
+  Rectangle *moveToRealZero(const QPoint &) final;
+  Rectangle *placeAt() final;
+
+  void __move(const QPoint &point) final;
 
 private:
   QRect rect;
