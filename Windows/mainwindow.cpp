@@ -28,7 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
           ui->definitionRenderer, SLOT(renderDescription(DescriptionItem *)));
   ui->definitionRenderer->changeSize();
 
-  definitionModel = static_cast<DefinitionModel *>(ui->definitionView->model());
+  definitionModel =
+      dynamic_cast<DefinitionModel *>(ui->definitionView->model());
 
   // Auto-Expand each node after rows are inserted
   connect(definitionModel, &QAbstractItemModel::rowsInserted,
@@ -108,9 +109,9 @@ void MainWindow::editDefinition(bool) {
   ShapeItem *item;
 
   if (selected->isDescription()) {
-    item = static_cast<ShapeItem *>(selected->parent());
+    item = dynamic_cast<ShapeItem *>(selected->parent());
   } else {
-    item = static_cast<ShapeItem *>(selected);
+    item = dynamic_cast<ShapeItem *>(selected);
   }
 
   wizard.setDefinitionName(item->name());
@@ -161,7 +162,7 @@ void MainWindow::changeBGColour(bool) {
 }
 
 void MainWindow::addDefinitionWizardAccepted() {
-  AddDefinitionWizard *wizard = static_cast<AddDefinitionWizard *>(sender());
+  AddDefinitionWizard *wizard = dynamic_cast<AddDefinitionWizard *>(sender());
   ShapeItem *up = wizard->updater();
   if (up != nullptr) {
     up->setData(0, wizard->definitionName());
@@ -176,18 +177,18 @@ void MainWindow::addDefinitionWizardAccepted() {
 }
 
 void MainWindow::addLayerAccepted() {
-  LayerDialog *dialog = static_cast<LayerDialog *>(sender());
+  LayerDialog *dialog = dynamic_cast<LayerDialog *>(sender());
   definitionModel->insertLayer(dialog->getLayerName());
 }
 
 void MainWindow::addObjectAccepted() {
-  ObjectDialog *dialog = static_cast<ObjectDialog *>(sender());
+  ObjectDialog *dialog = dynamic_cast<ObjectDialog *>(sender());
   definitionModel->insertObject(dialog->getUpdater(), dialog->selected());
   LayerItem *layerToUpdate = definitionModel->layers()->layer(
       definitionModel->layers()->childCount() - 1);
   ObjectItem *objectToUpdate =
       layerToUpdate->object(layerToUpdate->childCount() - 1);
-  DescriptionItem *desc = static_cast<DescriptionItem *>(
+  DescriptionItem *desc = dynamic_cast<DescriptionItem *>(
       definitionModel->definitions()->findByName(dialog->selected())->child(0));
   objectToUpdate->setShapes(desc->shapes());
 }

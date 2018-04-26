@@ -13,7 +13,7 @@ class DescriptionItem;
 
 class ShapeItem : public RootItem {
 public:
-  explicit ShapeItem(RootDefinitionItem *parent, const QString &tName);
+  ShapeItem(RootDefinitionItem *parent, const QString &tName);
   ~ShapeItem();
 
   const QString &name() const { return mName; }

@@ -8,7 +8,7 @@
 class Triangle : public Shape {
 public:
   explicit Triangle(const QRect &);
-  ~Triangle() = default;
+  ~Triangle() override = default;
 
   Triangle(const Triangle &rhs) = default;
   Triangle(Triangle &&rhs) = default;

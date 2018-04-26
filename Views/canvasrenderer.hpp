@@ -15,9 +15,10 @@ public:
 
   QColor backgroundColour() const;
   void setBackgroundColour(const QColor &backgroundColour);
+  void clear();
 
 protected:
-  void paintEvent(QPaintEvent *event);
+  void paintEvent(QPaintEvent *event) override;
 
 signals:
 

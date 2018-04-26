@@ -10,7 +10,7 @@ class QPainter;
 class Rectangle : public Shape {
 public:
   explicit Rectangle(const QRect &);
-  ~Rectangle() = default;
+  ~Rectangle() override = default;
 
   Rectangle(const Rectangle &rhs) = default;
   Rectangle(Rectangle &&rhs) = default;

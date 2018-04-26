@@ -7,13 +7,13 @@ class LayerItem;
 
 namespace Ui {
 class ObjectDialog;
-}
+} // namespace Ui
 
 class ObjectDialog : public QDialog {
   Q_OBJECT
 
 public:
-  explicit ObjectDialog(QWidget *parent = 0);
+  explicit ObjectDialog(QWidget *parent = nullptr);
   ~ObjectDialog();
 
   void addObject(const QString &);

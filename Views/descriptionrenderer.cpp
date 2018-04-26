@@ -4,7 +4,8 @@
 
 #include "Items/descriptionitem.hpp"
 
-DescriptionRenderer::DescriptionRenderer(QWidget *parent) : QWidget(parent) {
+DescriptionRenderer::DescriptionRenderer(QWidget *parent)
+    : QWidget(parent), description{nullptr} {
   setAutoFillBackground(true);
   image = QImage(400, 400, QImage::Format_RGB32);
   image.fill(qRgb(255, 255, 255));

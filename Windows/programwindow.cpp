@@ -20,6 +20,7 @@ void ProgramWindow::addShape(const QList<QSharedPointer<Shape>> &shape) {
 }
 
 void ProgramWindow::draw() {
+  ui->canvas->clear();
   ui->canvas->setShapes(getShapes());
   ui->canvas->setBackgroundColour(backgroundColour);
   ui->canvas->render();

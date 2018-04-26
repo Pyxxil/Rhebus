@@ -17,7 +17,7 @@ class ShapeItem;
 class DescriptionItem : public RootItem {
 public:
   explicit DescriptionItem(ShapeItem *parent);
-  virtual ~DescriptionItem() = default;
+  ~DescriptionItem() override = default;
 
   ShapeItem *parent() const;
 
@@ -29,21 +29,6 @@ public:
   }
   void addShape(const QSharedPointer<Shape> &shape) {
     mShapes.append(QSharedPointer<Shape>(shape->clone()));
-    //    const QString &t = shape->name();
-    //    qDebug() << "Adding shape:" << t;
-    //    if (t == "Triangle") {
-    //      Triangle *n = static_cast<Triangle *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Rectangle") {
-    //      Rectangle *n = static_cast<Rectangle *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Line") {
-    //      Line *n = static_cast<Line *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Path") {
-    //      Path *n = static_cast<Path *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    }
   }
   void addShapes(const QList<QSharedPointer<Shape>> &tShapes) {
     for (auto &&shape : tShapes) {

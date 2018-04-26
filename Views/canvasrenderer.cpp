@@ -17,12 +17,14 @@ QList<QList<QSharedPointer<Shape>>> CanvasRenderer::shapes() const {
 
 void CanvasRenderer::setShapes(
     const QList<QList<QSharedPointer<Shape>>> &objects) {
-  for (auto &&obj : objects) {
+  for (int i = 0; i < objects.length(); ++i) {
     QList<QSharedPointer<Shape>> shapes;
 
-    for (auto &&shape : obj) {
+    for (auto &&shape : objects[i]) {
+      qDebug() << "Rect:" << image.rect();
       shapes.append(QSharedPointer<Shape>(
-          shape->moveToRealZero(image.rect().bottomLeft())));
+          shape->moveToRealZero(QPoint(image.rect().bottomLeft().x() + 200 * i,
+                                       image.rect().bottomLeft().y()))));
     }
 
     if (!shapes.empty()) {
@@ -39,6 +41,11 @@ void CanvasRenderer::setBackgroundColour(const QColor &backgroundColour) {
   render();
 }
 
+void CanvasRenderer::clear() {
+  image = QImage(width(), height(), QImage::Format_RGB32);
+  image.fill(backgroundColour());
+}
+
 void CanvasRenderer::paintEvent(QPaintEvent *event) {
   QPainter painter(this);
   QRect dirtyRect = event->rect();
@@ -46,9 +53,7 @@ void CanvasRenderer::paintEvent(QPaintEvent *event) {
 }
 
 void CanvasRenderer::render() {
-  image = QImage(width(), height(), QImage::Format_RGB32);
-  image.fill(backgroundColour());
-
+  clear();
   QPainter painter(&(this->image));
   for (auto &shape : mShapes) {
     for (auto &obj : shape) {

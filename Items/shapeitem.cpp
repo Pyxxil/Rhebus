@@ -26,8 +26,8 @@ int ShapeItem::childCount() const { return descriptions.count(); }
 
 int ShapeItem::childNumber() {
   if (parent()) {
-    return static_cast<RootDefinitionItem *>(parent())->definitions().indexOf(
-        const_cast<ShapeItem *>(this));
+    return dynamic_cast<RootDefinitionItem *>(parent())->definitions().indexOf(
+        this);
   }
 
   return 0;

@@ -8,13 +8,13 @@
 
 namespace Ui {
 class ProgramWindow;
-}
+} // namespace Ui
 
 class ProgramWindow : public QWidget {
   Q_OBJECT
 
 public:
-  explicit ProgramWindow(QWidget *parent = 0);
+  explicit ProgramWindow(QWidget *parent = nullptr);
   ~ProgramWindow();
 
   void addShape(const QList<QSharedPointer<Shape>> &);

@@ -5,7 +5,7 @@
 
 namespace Ui {
 class AddDefinitionWizard;
-}
+} // namespace Ui
 
 #include "Shapes/shape.hpp"
 
@@ -16,7 +16,7 @@ class AddDefinitionWizard : public QWizard {
   Q_OBJECT
 
 public:
-  explicit AddDefinitionWizard(QWidget *parent = 0);
+  explicit AddDefinitionWizard(QWidget *parent = nullptr);
   ~AddDefinitionWizard();
 
   const QString definitionName() const;
@@ -34,8 +34,8 @@ public slots:
   void openPenColourChooser();
   void openBrushColourChooser();
 
-  void penColourChanged(QColor);
-  void brushColourChanged(QColor);
+  void penColourChanged(const QColor &);
+  void brushColourChanged(const QColor &);
 
 signals:
   void updateSizes();

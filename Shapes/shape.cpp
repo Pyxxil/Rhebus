@@ -1,3 +1,3 @@
 #include "shape.hpp"
 
-Shape::Shape() {}
+Shape::Shape() : penWidth{0} {}

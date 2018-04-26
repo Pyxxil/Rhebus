@@ -5,7 +5,7 @@
 
 class Line : public Shape {
 public:
-  explicit Line(const QPoint &p, const QPoint &l);
+  Line(const QPoint &p, const QPoint &l);
   ~Line() = default;
 
   Line(const Line &rhs) = default;

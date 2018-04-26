@@ -86,13 +86,13 @@ void AddDefinitionWizard::openBrushColourChooser() {
   colourDialog.exec();
 }
 
-void AddDefinitionWizard::penColourChanged(QColor colour) {
+void AddDefinitionWizard::penColourChanged(const QColor &colour) {
   ui->penColourButton->setStyleSheet(
       QString("QPushButton { background-color : %1; color : %1; }")
           .arg(colour.name()));
 }
 
-void AddDefinitionWizard::brushColourChanged(QColor colour) {
+void AddDefinitionWizard::brushColourChanged(const QColor &colour) {
   ui->brushColourButton->setStyleSheet(
       QString("QPushButton { background-color : %1; color : %1; }")
           .arg(colour.name()));

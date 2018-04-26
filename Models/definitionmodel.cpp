@@ -7,7 +7,8 @@
 
 #include <QDebug>
 
-DefinitionModel::DefinitionModel(QObject *parent) : QAbstractItemModel(parent) {
+DefinitionModel::DefinitionModel(QObject *parent)
+    : QAbstractItemModel(parent), mDefinitions(), mLayers() {
   rootItem = new RootItem(QVector<QVariant>() << QString(""), nullptr);
   setupModelData(rootItem);
 }
@@ -77,7 +78,7 @@ int DefinitionModel::columnCount(const QModelIndex &) const {
 
 Qt::ItemFlags DefinitionModel::flags(const QModelIndex &index) const {
   if (!index.isValid()) {
-    return 0;
+    return nullptr;
   }
 
   return QAbstractItemModel::flags(index);
@@ -176,7 +177,7 @@ RootItem *DefinitionModel::getItem(const QModelIndex &index) const {
 }
 
 void DefinitionModel::insertDefinition(
-    const QString &name, const QList<QSharedPointer<Shape>> shapes) {
+    const QString &name, const QList<QSharedPointer<Shape>> &shapes) {
   beginInsertRows(QModelIndex(), 0, 1);
   mDefinitions->addDefinition(name);
   mDefinitions->definition(mDefinitions->childCount() - 1)

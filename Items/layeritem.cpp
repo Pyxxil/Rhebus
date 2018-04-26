@@ -18,8 +18,7 @@ int LayerItem::childCount() const { return mObjects.count(); }
 
 int LayerItem::childNumber() {
   if (parent()) {
-    return static_cast<RootLayerItem *>(parent())->layers().indexOf(
-        const_cast<LayerItem *>(this));
+    return dynamic_cast<RootLayerItem *>(parent())->layers().indexOf(this);
   }
 
   return 0;

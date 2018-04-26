@@ -15,9 +15,9 @@ QVariant RootItem::data(int column) const { return itemData.value(column); }
 
 int RootItem::childCount() const { return childItems.count(); }
 
-int RootItem::childNumber() const {
+int RootItem::childNumber() {
   if (parent()) {
-    return parent()->children().indexOf(const_cast<RootItem *>(this));
+    return parent()->children().indexOf(this);
   }
 
   return 0;

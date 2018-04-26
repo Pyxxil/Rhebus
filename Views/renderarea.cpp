@@ -8,7 +8,7 @@
 
 #include "renderarea.hpp"
 
-RenderArea::RenderArea(QWidget *parent) : QWidget(parent) {
+RenderArea::RenderArea(QWidget *parent) : QWidget(parent), shape() {
   antialiased = false;
   transformed = false;
 
@@ -21,21 +21,6 @@ void RenderArea::setShapes(QList<QSharedPointer<Shape>> shapes) {
   mShapes.clear();
   for (auto &&shape : shapes) {
     mShapes.append(QSharedPointer<Shape>(shape->clone()));
-    //    const QString &t = shape->name();
-    //    qDebug() << "Adding shape:" << t;
-    //    if (t == "Triangle") {
-    //      Triangle *n = static_cast<Triangle *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Rectangle") {
-    //      Rectangle *n = static_cast<Rectangle *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Line") {
-    //      Line *n = static_cast<Line *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    } else if (t == "Path") {
-    //      Path *n = static_cast<Path *>(shape.data())->clone();
-    //      mShapes.append(QSharedPointer<Shape>(n));
-    //    }
   }
   clearImage();
 }
@@ -155,14 +140,6 @@ void RenderArea::paintEvent(QPaintEvent *event) {
   painter.drawImage(dirtyRect, this->image, dirtyRect);
 }
 
-namespace {
-template <typename T> inline T min(T x, T y) { return x < y ? x : y; }
-
-template <typename T> inline T max(T x, T y) { return x < y ? x : y; }
-
-template <typename T> inline T max(T x) { return x < 0 ? -x : x; }
-} // namespace
-
 void RenderArea::draw(const QPoint &endPoint) {
   clearImage();
 
@@ -195,7 +172,7 @@ void RenderArea::draw(const QPoint &endPoint) {
       // painter.drawPoints(points, 4);
       if (currentShape) {
         QList<QPoint> points =
-            static_cast<Path *>(currentShape.data())->points();
+            dynamic_cast<Path *>(currentShape.data())->points();
         currentShape = QSharedPointer<Path>(new Path(points << endPoint));
       } else {
         currentShape = QSharedPointer<Path>(
@@ -265,11 +242,11 @@ void RenderArea::clearImage() {
 }
 
 void RenderArea::push() {
-  mShapes.push_back(std::move(currentShape));
+  mShapes.push_back(currentShape);
   currentShape = nullptr;
 }
 
-void RenderArea::setFromString(QString string) {
+void RenderArea::setFromString(const QString &string) {
   if (string == "Line") {
     setShape(Shapes::Line);
   } else if (string == "Freeform") {

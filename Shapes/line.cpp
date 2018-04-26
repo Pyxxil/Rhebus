@@ -48,7 +48,19 @@ Line *Line::scaled() { return this; }
 
 Line *Line::rotated() { return this; }
 
-Line *Line::moveToRealZero(const QPoint &) { return this; }
+Line *Line::moveToRealZero(const QPoint &realZero) {
+  auto &&[topLeft, bottomRight] = min_max_pair(line.p1(), line.p2());
+  QRect boundingRect(topLeft, bottomRight);
+
+  qDebug() << "topLeft, bottomRight" << topLeft << ',' << bottomRight;
+
+  Line *l = clone();
+  l->setMovingStart(boundingRect.bottomLeft());
+  l->__move(QPoint(realZero.x() + topLeft.x(),
+                   realZero.y() - (400 - bottomRight.y())));
+
+  return l;
+}
 
 Line *Line::placeAt() { return this; }
 

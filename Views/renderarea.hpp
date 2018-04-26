@@ -27,14 +27,14 @@ enum Shape {
   Pixmap,
   Triangle
 };
-}
+} // namespace Shapes
 
 class RenderArea : public QWidget {
   Q_OBJECT
 
 public:
-  RenderArea(QWidget *parent = 0);
-  ~RenderArea() {}
+  explicit RenderArea(QWidget *parent = nullptr);
+  ~RenderArea() override {}
 
   const QList<QSharedPointer<Shape>> shapes() const { return mShapes; }
 
@@ -54,7 +54,7 @@ protected:
   void push();
 
 public slots:
-  void setFromString(QString string);
+  void setFromString(const QString &string);
   void setShape(Shapes::Shape shape);
   void setPen(const QPen &pen);
   void setBrush(const QBrush &brush);
@@ -66,18 +66,17 @@ public slots:
   void changeSize();
 
 private:
+  Shapes::Shape shape;
   QColor penColour;
   QColor fillColour;
-  Shapes::Shape shape;
-  QPen pen;
   QBrush brush;
+  QPen pen;
+  QImage image;
   bool antialiased;
   bool transformed;
   bool scribbling{false};
   bool selected{false};
   bool moving{true};
-  QPixmap pixmap;
-  QImage image;
 
   QSharedPointer<Shape> currentShape;
   QList<QSharedPointer<Shape>> mShapes;

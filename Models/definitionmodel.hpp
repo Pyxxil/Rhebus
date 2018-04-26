@@ -14,7 +14,7 @@ class LayerItem;
 class DefinitionModel : public QAbstractItemModel {
   Q_OBJECT
 public:
-  DefinitionModel(QObject *parent = nullptr);
+  explicit DefinitionModel(QObject *parent = nullptr);
 
   QModelIndex index(int row, int column,
                     const QModelIndex &parent = QModelIndex()) const;
@@ -39,7 +39,7 @@ public:
   RootItem *getItem(const QModelIndex &index) const;
 
   void insertDefinition(const QString &name,
-                        const QList<QSharedPointer<Shape>> shapes);
+                        const QList<QSharedPointer<Shape>> &shapes);
 
   RootDefinitionItem *definitions() const { return mDefinitions; }
   RootLayerItem *layers() const { return mLayers; }

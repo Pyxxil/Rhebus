@@ -47,7 +47,13 @@ Triangle *Triangle::scaled() { return this; }
 
 Triangle *Triangle::rotated() { return this; }
 
-Triangle *Triangle::moveToRealZero(const QPoint &) { return this; }
+Triangle *Triangle::moveToRealZero(const QPoint &realZero) {
+  Triangle *t = clone();
+  t->setMovingStart(polygon.boundingRect().bottomLeft());
+  t->__move(QPoint(realZero.x() + polygon.boundingRect().left(),
+                   realZero.y() - (400 - polygon.boundingRect().right())));
+  return t;
+}
 
 Triangle *Triangle::placeAt() { return this; }
 

@@ -8,8 +8,8 @@
 
 class Path : public Shape {
 public:
-  Path(const QList<QPoint> &);
-  ~Path() = default;
+  explicit Path(const QList<QPoint> &);
+  ~Path() override = default;
 
   Path(const Path &rhs) = default;
   Path(Path &&rhs) = default;
@@ -36,9 +36,19 @@ public:
 
   void __move(const QPoint &point) final;
 
+  int getHeight() const;
+  void setHeight(int value);
+
+  int getWidth() const;
+  void setWidth(int value);
+
 private:
+  int height;
   QList<QLine> mLines;
   QList<QPoint> mPoints;
+  QPoint bottomRight;
+  QPoint topLeft;
+  int width;
 };
 
 #endif // POINTS_HPP

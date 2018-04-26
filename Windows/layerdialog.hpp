@@ -5,13 +5,13 @@
 
 namespace Ui {
 class LayerDialog;
-}
+} // namespace Ui
 
 class LayerDialog : public QDialog {
   Q_OBJECT
 
 public:
-  explicit LayerDialog(QWidget *parent = 0);
+  explicit LayerDialog(QWidget *parent = nullptr);
   ~LayerDialog();
 
   QString getLayerName() const;

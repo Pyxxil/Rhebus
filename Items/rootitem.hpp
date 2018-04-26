@@ -1,3 +1,5 @@
+#include <utility>
+
 #ifndef ROOTITEM_HPP
 #define ROOTITEM_HPP
 
@@ -8,14 +10,14 @@ class RootLayerItem;
 
 class RootItem {
 public:
-  explicit RootItem(const QVector<QVariant> &data, RootItem *parent = nullptr)
-      : itemData(data), childItems(), mParent(parent) {}
+  explicit RootItem(QVector<QVariant> data, RootItem *parent = nullptr)
+      : itemData(std::move(data)), childItems(), mParent(parent) {}
   virtual ~RootItem();
 
   RootItem *child(int row);
   int childCount() const;
   int columnCount() const;
-  int childNumber() const;
+  int childNumber();
 
   QVariant data(int column) const;
 

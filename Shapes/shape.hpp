@@ -6,6 +6,22 @@
 
 class QPainter;
 
+/*!
+ * \brief Create a pair of the max and minimum values between a and b
+ * \param a
+ * \param b
+ * \return Returns a std::pair of the form { min, max }
+ */
+constexpr std::pair<int, int> min_max_pair(int a, int b) {
+  return a < b ? std::make_pair(a, b) : std::make_pair(b, a);
+}
+
+constexpr std::pair<QPoint, QPoint> min_max_pair(QPoint a, QPoint b) {
+  auto &&[min_x, max_x] = min_max_pair(a.x(), a.y());
+  auto &&[min_y, max_y] = min_max_pair(a.y(), b.y());
+  return std::make_pair(QPoint(min_x, min_y), QPoint(max_x, max_y));
+}
+
 class Shape {
 public:
   Shape();

@@ -2,7 +2,7 @@
 #include "ui_objectdialog.h"
 
 ObjectDialog::ObjectDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::ObjectDialog) {
+    : QDialog(parent), ui(new Ui::ObjectDialog), updater{nullptr} {
   ui->setupUi(this);
 }
 
